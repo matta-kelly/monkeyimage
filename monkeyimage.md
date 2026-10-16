@@ -49,6 +49,19 @@ This folder is the repo: `github.com/matta-kelly/monkeyimage`, public, made from
 
 ## Packages
 
+What gets baked in. Ask in order, the first yes decides:
+
+| Test                                                         | If yes                        | Example                   |
+| ------------------------------------------------------------ | ----------------------------- | ------------------------- |
+| Does it need root, a system service, or files in `/etc`?     | Image                         | keyd, tailscale, libvirt  |
+| Does it plug into Sway itself (bar, notifications, outputs)? | Image                         | mako, shikane, swayosd    |
+| Is it a GUI app you open?                                    | Apps ([[monkeyflatpaks]])     | Brave, Obsidian           |
+| Is it a CLI tool only I use?                                 | User ([[deeotee]]) or a distrobox | fzf, ripgrep          |
+| Does only one project need it?                               | Dev container                 | node, a Python version    |
+
+- Jojo gets the same image: anything baked in is hers too
+- an image change means a rebuild and a reboot: the image holds what is stable
+
 - From the base, already what I use
 	- sway, swaybg, swayidle, swaylock, waybar, foot, rofi, grim, slurp, brightnessctl, blueman, Thunar, imv, wev, xdg-desktop-portal-wlr
 - From the base, plumbing
