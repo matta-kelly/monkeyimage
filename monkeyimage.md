@@ -20,25 +20,27 @@ The Image layer of [[Monkeyworks]]: the OS as one image, built from a recipe, th
 ---
 ## Repo
 
-This folder is the repo: `github.com/matta-kelly/monkeyimage`, public.
-- recipe: `recipes/recipe.yml`
+This folder is the repo: `github.com/matta-kelly/monkeyimage`, public, made from [blue-build/template](https://github.com/blue-build/template).
+- recipe: `recipes/recipe.yml`; it can split into more files ([from-file](https://blue-build.org/how-to/multiple-files/))
 - files copied into the image: `files/system/` → `/`
 - CI: `.github/workflows/build.yml` (BlueBuild Action), paused until signing is set up
 	- signing needs a cosign key pair: `cosign.pub` in the repo, the private key as the repo secret `SIGNING_SECRET`
+- an offline install ISO can be made from the image ([generate ISO](https://blue-build.org/how-to/generate-iso/))
 - public, so nothing goes in that names my network or is personal: that goes in [[deeotee]] or the Jojo layer
 
 ## Base
 
 `quay.io/fedora-ostree-desktops/sway-atomic:45`, official Fedora Sway Atomic.
+- [Sway Atomic Home](https://fedoraproject.org/atomic-desktops/sway/), [Atomic Desktops docs](https://docs.fedoraproject.org/en-US/atomic-desktops/)
 - it adds about 180 packages over the bare atomic base
 - the value is not Sway, it is the plumbing Fedora tests together: login, keyring, wifi, VPN, printing, audio, power
 - Jojo needs all of that plumbing
 
-| Rejected                         | Why                                                                     |
-| -------------------------------- | ----------------------------------------------------------------------- |
-| `ghcr.io/ublue-os/base-main`     | no Sway (uBlue builds no Sway image). Its extras are mostly codecs, and flatpaks bring their own |
-| `ghcr.io/wayblueorg/sway`        | beta, only a `latest` tag, one Fedora release behind                    |
-| `quay.io/fedora/fedora-bootc`    | server minimal: every desktop piece would be built by hand              |
+| Rejected                      | Why                                                                                                                  |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `ghcr.io/ublue-os/base-main`  | [Universal Blue](https://universal-blue.org/). No Sway (uBlue builds no Sway image). Its extras are mostly codecs, and flatpaks bring their own                     |
+| [`ghcr.io/wayblueorg/sway`](https://github.com/wayblueorg/wayblue) | beta, only a `latest` tag, one Fedora release behind -->perhaps look at as a reference design (uses same base image) |
+| `quay.io/fedora/fedora-bootc` | server minimal: every desktop piece would be built by hand                                                           |
 
 ## Packages
 
