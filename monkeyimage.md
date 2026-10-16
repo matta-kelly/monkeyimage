@@ -7,10 +7,15 @@ The Image layer of [[Monkeyworks]]: the OS as one image, built from a recipe, th
 - [[#Repo]] where the recipe lives
 - [[#Base]] what it builds on, and why
 - [[#Packages]] what is in it, what goes in it, what stays out
-- [[#Open]]
+- [[#Batteries]] uBlue's extras, not chosen yet
 
 - [[Monkeyworks#Build]]: how the recipe becomes an image (BlueBuild)
 - [[Monkeyworks#Update]]: how a machine gets the new image
+
+### Desk
+- open questions
+	- which added packages are not in the Fedora repos (likely keyd, swayosd, wl-gammarelay-rs): COPR or a build stage
+	- remove the replaced Fedora picks, or leave them installed and unused
 
 ---
 ## Repo
@@ -67,7 +72,3 @@ uBlue's extras, checked against the base. Not in the recipe until chosen.
 	- full codecs (RPM Fusion `ffmpeg`, `mesa-va-drivers-freeworld`): Fedora's `ffmpeg-free` has no H.264 or HEVC. Only host apps need them; flatpaks bring their own
 	- hardware udev rules (solaar, openrgb, ratbag): only for that hardware
 - No: htop, tmux, vim, fzf. CLI tools go in the User layer or a distrobox
-
-## Open
-- which added packages are not in the Fedora repos (likely keyd, swayosd, wl-gammarelay-rs): COPR or a build stage
-- remove the replaced Fedora picks, or leave them installed and unused
