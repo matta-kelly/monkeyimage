@@ -14,7 +14,12 @@ The Image layer of [[Monkeyworks]]: the OS as one image, built from a recipe, th
 
 ### Desk
 - open questions
-	- which added packages are not in the Fedora repos (likely keyd, swayosd, wl-gammarelay-rs): COPR or a build stage
+	- added packages not in the Fedora 45 repos: how each gets in (all others are in `fedora`, tailscale included)
+		- swayosd: COPR `erikreider/swayosd`, the author's own
+		- keyd: COPR `alternateved/keyd` or `meeuw/keyd`, both 2.6.0
+		- satty: only personal Hyprland COPRs, not on Flathub. Build stage (cargo), or swappy (in Fedora)
+		- shikane: no COPR builds for Fedora 45. Build stage (cargo), or kanshi (in the base)
+		- wl-gammarelay-rs: one small personal COPR. Build stage (cargo). The bluelight scripts and units in [[deeotee]] need it
 	- remove the replaced Fedora picks, or leave them installed and unused
 
 ---
