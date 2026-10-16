@@ -49,7 +49,7 @@ This folder is the repo: `github.com/matta-kelly/monkeyimage`, public.
 	- desktop: kitty, mako, swayosd, satty, wf-recorder, cliphist, gammastep, wl-gammarelay-rs, shikane, keyd
 	- system: tailscale, libvirt, qemu, virt-manager
 - Not in the image
-	- GUI apps: Apps layer, flatpaks
+	- GUI apps: flatpaks, installed at boot. The recipe carries the "both" list: [[monkeyflatpaks]]
 	- CLI and dev tools: User layer ([[deeotee]]) or a distrobox
 	- Arch tools that atomic replaces: yay, grub-btrfs, timeshift, stow, docker
 
