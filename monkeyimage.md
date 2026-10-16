@@ -53,6 +53,21 @@ This folder is the repo: `github.com/matta-kelly/monkeyimage`, public.
 	- CLI and dev tools: User layer ([[deeotee]]) or a distrobox
 	- Arch tools that atomic replaces: yay, grub-btrfs, timeshift, stow, docker
 
+## Batteries
+
+uBlue's extras, checked against the base. Not in the recipe until chosen.
+- Already in the base: wl-clipboard, wireguard-tools, toolbox, libfido2, libheif, libcamera, zstd, nvme-cli, ffmpeg-free
+- Likely yes
+	- distrobox: Bootstrap uses `distrobox-assemble`
+	- just: runs the `justfiles` commands
+- Maybe, if the need is real
+	- pam-u2f, pamu2fcfg, yubikey-manager: log in or sudo with a security key
+	- heif-pixbuf-loader, ffmpegthumbnailer: thumbnails in Thunar for phone photos (HEIC) and videos. Likely matters for Jojo
+	- smartmontools, lshw: diagnose the machine
+	- full codecs (RPM Fusion `ffmpeg`, `mesa-va-drivers-freeworld`): Fedora's `ffmpeg-free` has no H.264 or HEVC. Only host apps need them; flatpaks bring their own
+	- hardware udev rules (solaar, openrgb, ratbag): only for that hardware
+- No: htop, tmux, vim, fzf. CLI tools go in the User layer or a distrobox
+
 ## Open
 - which added packages are not in the Fedora repos (likely keyd, swayosd, wl-gammarelay-rs): COPR or a build stage
 - remove the replaced Fedora picks, or leave them installed and unused
