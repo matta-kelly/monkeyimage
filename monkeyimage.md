@@ -214,7 +214,9 @@ Firmware, bootloader, kernel, initramfs
 
 ## Config
 
-In `/etc`. Config files the image ships: `files/system/etc/` in the repo. None yet.
+In `/etc`. Config files the image ships: `files/system/etc/` in the repo.
+- `rpm-ostreed.conf`: `AutomaticUpdatePolicy=stage`. An update downloads and stages the new image; it takes over at the next reboot ([[Monkeyworks#Update]])
+- `rpm-ostreed-automatic.timer`: enabled by the recipe's `systemd` module, runs the policy once a day
 - planned: logind lid-close (clamshell), geoclue (location for the night light)
 
 ## Not in the image
