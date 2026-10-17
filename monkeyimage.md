@@ -21,12 +21,8 @@ The image of [[Monkeyworks]]: `/usr` and `/etc`, built from one recipe, the same
 		- keyd: COPR `alternateved/keyd` or `meeuw/keyd`, both 2.6.0
 		- satty: only personal Hyprland COPRs, not on Flathub. Build stage (cargo), or swappy (in Fedora)
 		- shikane: no COPR builds for Fedora 45. Build stage (cargo), or kanshi (in the base)
-		- wl-gammarelay-rs: one small personal COPR. Build stage (cargo). The bluelight scripts and units in [[deeotee]] need it
 	- remove the replaced base picks, or leave them installed and unused
-	- night light: gammastep and wl-gammarelay-rs do one job. Keep one?
-	- the base enables VM guest agents (open-vm-tools, VirtualBox, qemu, spice): leave them, or disable on hardware?
 	- the base enables firewalld: keep it as is next to tailscale, or configure it?
-	- `battery?` items: decide each
 
 ---
 ## Repo
@@ -71,7 +67,7 @@ The image holds what runs at the kernel, system and session stages ([[Monkeywork
 
 In `/usr`. Rows: boot stage. Buckets: the [Arch General recommendations](https://wiki.archlinux.org/title/General_recommendations) sections, plus [[Monkeyworks#ULSAH outline]] where Arch has none (storage, virtualization). Only packages that are a decision or that I touch; the rest of the 1423 are libraries and support (`rpm -qa` in the base image).
 
-Tags: `base` in the base image, `added` by the recipe, `battery?` not chosen yet, `not in Fedora` needs a source (Desk).
+Tags: `base` in the base image, `added` by the recipe, `not in Fedora` needs a source (Desk).
 
 ### Kernel
 Firmware, bootloader, kernel, initramfs
@@ -104,14 +100,12 @@ Firmware, bootloader, kernel, initramfs
 	- firewalld: enabled `base`
 	- audit `base`
 	- fprintd + fprintd-pam: fingerprint login `base`
-	- pam-u2f, pamu2fcfg: log in or sudo with a security key `battery?`
-	- yubikey-manager `battery?`
 - package management
 	- flatpak `base`
 	- podman `base`
 	- toolbox `base`
-	- distrobox: Bootstrap uses `distrobox-assemble` `battery?`, likely yes
-	- just: runs the `justfiles` commands `battery?`, likely yes
+	- distrobox: Bootstrap uses `distrobox-assemble` `added`
+	- just: runs the `justfiles` commands `added`
 - networking
 	- NetworkManager `base`
 	- wpa_supplicant: wifi `base`
@@ -128,7 +122,6 @@ Firmware, bootloader, kernel, initramfs
 	- upower `base`
 - input devices
 	- keyd: key remapping `added` `not in Fedora`
-	- udev rules for solaar, openrgb, ratbag: only with that hardware `battery?`
 - printing
 	- cups `base`
 	- cups-browsed `base`
@@ -139,13 +132,12 @@ Firmware, bootloader, kernel, initramfs
 	- mdadm `base`
 	- xfsprogs `base`
 	- fstrim timer `base`
-	- smartmontools: disk health `battery?`
-	- lshw: hardware list `battery?`
+	- smartmontools: disk health `added`
 - virtualization
 	- libvirt `added`
 	- qemu `added`
 	- virt-manager `added`
-	- guest agents, for running as a VM: enabled `base`
+	- guest agents, for running as a VM: enabled, but each starts only inside its own VM `base`
 		- open-vm-tools
 		- virtualbox-guest-additions
 		- qemu-guest-agent
@@ -177,8 +169,6 @@ Firmware, bootloader, kernel, initramfs
 		- shikane: replaces kanshi `added` `not in Fedora`
 	- night light
 		- wlsunset `base`
-		- gammastep: replaces wlsunset `added`
-		- wl-gammarelay-rs `added` `not in Fedora`
 	- on-screen display
 		- swayosd `added` `not in Fedora`
 	- screenshots and recording
@@ -206,7 +196,6 @@ Firmware, bootloader, kernel, initramfs
 	- ffmpeg-free `base`
 	- pavucontrol `base`
 	- playerctl `base`
-	- full codecs (RPM Fusion `ffmpeg`, `mesa-va-drivers-freeworld`): `ffmpeg-free` has no H.264 or HEVC. Only host apps need them; flatpaks bring their own `battery?`
 - networking
 	- network-manager-applet `base`
 	- VPN plugins: openvpn, openconnect `base`
@@ -216,8 +205,8 @@ Firmware, bootloader, kernel, initramfs
 	- Thunar `base`
 	- tumbler: thumbnails `base`
 	- gvfs + gvfs-smb `base`
-	- heif-pixbuf-loader: thumbnails for phone photos, likely matters for Jojo `battery?`
-	- ffmpegthumbnailer: thumbnails for videos `battery?`
+	- heif-pixbuf-loader: thumbnails for phone photos, likely matters for Jojo `added`
+	- ffmpegthumbnailer: thumbnails for videos `added`
 - appearance
 	- fonts: Noto, Adwaita, Cantarell `base`
 	- Font Awesome: waybar icons `base`
@@ -236,3 +225,8 @@ In `/etc`. Config files the image ships: `files/system/etc/` in the repo. None y
 - GUI apps: flatpaks, installed at boot. The recipe carries the "both" list: [[monkeyflatpaks]]
 - CLI and dev tools: [[deeotee]] or a distrobox. So no htop, tmux, vim, fzf in the image
 - Arch tools that Atomic replaces: yay, grub-btrfs, timeshift, stow, docker
+- batteries not taken
+	- full codecs (RPM Fusion `ffmpeg`, `mesa-va-drivers-freeworld`): only host apps need them, flatpaks bring their own
+	- pam-u2f, yubikey-manager: no security key yet
+	- udev rules for solaar, openrgb, ratbag: no such hardware
+	- lshw: not needed
