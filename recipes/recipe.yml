@@ -8,6 +8,20 @@ description: My Fedora Sway Atomic image.
 base-image: quay.io/fedora-ostree-desktops/sway-atomic
 image-version: 45
 
+# build stages: their output is copied into the image, their build tools are not
+stages:
+  - name: keyd # not in Fedora: built from the pinned upstream release. Bump: the version and the sha256 together
+    from: fedora:45
+    modules:
+      - type: script
+        snippets:
+          - dnf install -y gcc make tar gzip
+          - curl -fsSLo /tmp/keyd.tar.gz https://github.com/rvaiya/keyd/archive/refs/tags/v2.6.0.tar.gz
+          - echo "697089681915b89d9e98caf93d870dbd4abce768af8a647d54650a6a90744e26  /tmp/keyd.tar.gz" | sha256sum -c - # a mismatch fails the build
+          - mkdir -p /tmp/keyd && tar -xzf /tmp/keyd.tar.gz -C /tmp/keyd --strip-components=1 # fixed dir: the version is only in the URL
+          - make -C /tmp/keyd
+          - make -C /tmp/keyd install PREFIX=/usr DESTDIR=/out FORCE_SYSTEMD=1 # /usr, not /usr/local: /usr/local is machine state on Atomic
+
 # modules run in order
 modules:
   - type: files
@@ -35,6 +49,11 @@ modules:
         - heif-pixbuf-loader
         - ffmpegthumbnailer
 
+  - type: copy # keyd's files from the keyd stage
+    from: keyd
+    src: /out/
+    dest: /
+
   - type: default-flatpaks # installed at boot, from Flathub
     configurations:
       - scope: system # the "both" list: every user gets these
@@ -45,5 +64,6 @@ modules:
     system:
       enabled:
         - rpm-ostreed-automatic.timer # daily download and stage, with the policy in /etc/rpm-ostreed.conf
+        - keyd.service # with no config, keyd matches no keyboard and does nothing
 
   - type: signing # policy and keys, so machines can check the image is signed
