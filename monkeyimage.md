@@ -169,10 +169,9 @@ Firmware, bootloader, kernel, initramfs
 	- screenshots and recording
 		- grim `base`
 		- slurp `base`
-		- wf-recorder `added`
+		- wf-recorder: screen recording `added`
 	- clipboard
 		- wl-clipboard `base`
-		- cliphist: clipboard history `added`
 	- portals
 		- xdg-desktop-portal-wlr `base`
 		- xdg-desktop-portal-gtk `base`
