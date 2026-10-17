@@ -20,9 +20,6 @@ The image of [[Monkeyworks]]: `/usr` and `/etc`, built from one recipe, the same
 		- swayosd: COPR `erikreider/swayosd`, the author's own
 		- keyd: COPR `alternateved/keyd` or `meeuw/keyd`, both 2.6.0
 		- satty: only personal Hyprland COPRs, not on Flathub. Build stage (cargo), or swappy (in Fedora)
-		- shikane: no COPR builds for Fedora 45. Build stage (cargo), or kanshi (in the base)
-	- remove the replaced base picks, or leave them installed and unused
-	- the base enables firewalld: keep it as is next to tailscale, or configure it?
 
 ---
 ## Repo
@@ -97,9 +94,11 @@ Firmware, bootloader, kernel, initramfs
 	- systemd-homed `base`
 	- zram-generator: compressed swap in RAM `base`
 - security
-	- firewalld: enabled `base`
+	- firewalld: enabled, zone `public`: in only ssh, mdns, dhcpv6. Kept as shipped: nothing needs to reach in, the tailnet included `base`
 	- audit `base`
 	- fprintd + fprintd-pam: fingerprint login `base`
+	- pam-u2f, pamu2fcfg: log in or sudo with a YubiKey, once set up in PAM `added`
+	- yubikey-manager: `ykman`, configures the YubiKey `added`
 - package management
 	- flatpak `base`
 	- podman `base`
@@ -166,7 +165,6 @@ Firmware, bootloader, kernel, initramfs
 		- dunst `base`
 	- outputs
 		- kanshi `base`
-		- shikane: replaces kanshi `added` `not in Fedora`
 	- night light
 		- wlsunset `base`
 	- on-screen display
@@ -227,6 +225,5 @@ In `/etc`. Config files the image ships: `files/system/etc/` in the repo. None y
 - Arch tools that Atomic replaces: yay, grub-btrfs, timeshift, stow, docker
 - batteries not taken
 	- full codecs (RPM Fusion `ffmpeg`, `mesa-va-drivers-freeworld`): only host apps need them, flatpaks bring their own
-	- pam-u2f, yubikey-manager: no security key yet
 	- udev rules for solaar, openrgb, ratbag: no such hardware
 	- lshw: not needed
