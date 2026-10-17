@@ -24,8 +24,10 @@ The image of [[Monkeyworks]]: `/usr` and `/etc`, built from one recipe, the same
 This folder is the repo: `github.com/matta-kelly/monkeyimage`, public, made from [blue-build/template](https://github.com/blue-build/template).
 - recipe: `recipes/recipe.yml`; it can split into more files ([from-file](https://blue-build.org/how-to/multiple-files/))
 - files copied into the image: `files/system/` → `/`
-- CI: `.github/workflows/build.yml` (BlueBuild Action), paused until signing is set up
-	- signing needs a cosign key pair: `cosign.pub` in the repo, the private key as the repo secret `SIGNING_SECRET`
+- CI: `.github/workflows/build.yml` (BlueBuild Action). Builds on every push to main, on pull requests, and daily at 06:00 UTC for Fedora's base updates
+	- pushes signed images to `ghcr.io/matta-kelly/monkeyimage`, public: `latest`, `<commit>-45`, and `pr-<n>-45` for pull requests
+	- signing: `cosign.pub` in the repo; the private key is the repo secret `SIGNING_SECRET`, with a copy in Vaultwarden (`monkeyimage-cosign-signing-key`)
+	- update size: not rechunked. A rebuild with nothing changed still costs each machine about 248 MB. Rechunking measured worse (457 MB). Options and measurements: [issue #8](https://github.com/matta-kelly/monkeyimage/issues/8)
 - an offline install ISO can be made from the image ([generate ISO](https://blue-build.org/how-to/generate-iso/))
 - public, so nothing goes in that names my network or is personal: that goes in [[deeotee]] or the Jojo layer
 
