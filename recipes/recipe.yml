@@ -6,12 +6,12 @@ description: My Fedora Sway Atomic image.
 
 # official Fedora Sway Atomic, pinned to a release: monkeyimage.md says why
 base-image: quay.io/fedora-ostree-desktops/sway-atomic
-image-version: 45
+image-version: 44
 
 # build stages: their output is copied into the image, their build tools are not
 stages:
   - name: keyd # not in Fedora: built from the pinned upstream release. Bump: the version and the sha256 together
-    from: fedora:45
+    from: fedora:44
     modules:
       - type: script
         snippets:
