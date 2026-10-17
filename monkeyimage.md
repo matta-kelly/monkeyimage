@@ -75,52 +75,158 @@ Tags: `base` in the base image, `added` by the recipe, `battery?` not chosen yet
 
 ### Kernel
 Firmware, bootloader, kernel, initramfs
-- booting: kernel, grub2 + shim (UEFI), bootupd (updates the bootloader), plymouth (boot splash) `base`
-- drivers and firmware: linux-firmware, amd-gpu-firmware, amd-ucode-firmware (microcode), mesa (GPU), fwupd (firmware updates) `base`
-- the image itself: ostree, rpm-ostree, bootc `base`
+- booting
+	- kernel `base`
+	- grub2 + shim: UEFI bootloader `base`
+	- bootupd: updates the bootloader `base`
+	- plymouth: boot splash `base`
+- drivers and firmware
+	- linux-firmware `base`
+	- amd-gpu-firmware `base`
+	- amd-ucode-firmware: CPU microcode `base`
+	- mesa: GPU drivers `base`
+	- fwupd: firmware updates `base`
+- the image itself
+	- ostree `base`
+	- rpm-ostree `base`
+	- bootc `base`
 
 ### System
 `sysinit` → `multi-user`, root, for every user
-- system administration: systemd, polkit, SELinux, sssd, systemd-homed, zram-generator (compressed swap in RAM) `base`
-- security: firewalld (enabled), audit, fprintd + fprintd-pam (fingerprint) `base`
-	- pam-u2f, pamu2fcfg, yubikey-manager (log in or sudo with a security key) `battery?`
-- package management: flatpak, podman, toolbox `base`
-	- distrobox (Bootstrap uses `distrobox-assemble`), just (runs the `justfiles` commands) `battery?`, likely yes
-- networking: NetworkManager, wpa_supplicant, ModemManager, systemd-resolved, chrony (time), avahi (local discovery), openvpn, wireguard-tools `base`
+- system administration
+	- systemd `base`
+	- polkit `base`
+	- SELinux `base`
+	- sssd `base`
+	- systemd-homed `base`
+	- zram-generator: compressed swap in RAM `base`
+- security
+	- firewalld: enabled `base`
+	- audit `base`
+	- fprintd + fprintd-pam: fingerprint login `base`
+	- pam-u2f, pamu2fcfg: log in or sudo with a security key `battery?`
+	- yubikey-manager `battery?`
+- package management
+	- flatpak `base`
+	- podman `base`
+	- toolbox `base`
+	- distrobox: Bootstrap uses `distrobox-assemble` `battery?`, likely yes
+	- just: runs the `justfiles` commands `battery?`, likely yes
+- networking
+	- NetworkManager `base`
+	- wpa_supplicant: wifi `base`
+	- ModemManager: mobile broadband `base`
+	- systemd-resolved: DNS `base`
+	- chrony: time `base`
+	- avahi: local discovery `base`
+	- openvpn `base`
+	- wireguard-tools `base`
 	- tailscale `added`
-- power management: tuned + tuned-ppd (power profiles), thermald, upower `base`
-- input devices: keyd `added` `not in Fedora`
-	- udev rules for solaar, openrgb, ratbag `battery?`, only with that hardware
-- printing: cups, cups-browsed, ipp-usb `base`
-- storage: udisks2, lvm2, mdadm, xfsprogs, fstrim timer `base`
-	- smartmontools, lshw (diagnose the machine) `battery?`
-- virtualization: libvirt, qemu, virt-manager `added`
-	- guest agents, for running as a VM: open-vm-tools, virtualbox-guest-additions, qemu-guest-agent, spice-vdagent `base`, enabled
-- multimedia: rtkit (realtime audio priority) `base`
+- power management
+	- tuned + tuned-ppd: power profiles `base`
+	- thermald `base`
+	- upower `base`
+- input devices
+	- keyd: key remapping `added` `not in Fedora`
+	- udev rules for solaar, openrgb, ratbag: only with that hardware `battery?`
+- printing
+	- cups `base`
+	- cups-browsed `base`
+	- ipp-usb `base`
+- storage
+	- udisks2 `base`
+	- lvm2 `base`
+	- mdadm `base`
+	- xfsprogs `base`
+	- fstrim timer `base`
+	- smartmontools: disk health `battery?`
+	- lshw: hardware list `battery?`
+- virtualization
+	- libvirt `added`
+	- qemu `added`
+	- virt-manager `added`
+	- guest agents, for running as a VM: enabled `base`
+		- open-vm-tools
+		- virtualbox-guest-additions
+		- qemu-guest-agent
+		- spice-vdagent
+- multimedia
+	- rtkit: realtime audio priority `base`
 
 ### Session
 `graphical`, SDDM login, then my user manager, inside Sway
 - graphical user interface
-	- display manager: sddm `base`
-	- compositor: sway, sway-config-fedora, sway-systemd, swaybg, swayidle, swaylock `base`
-	- bar and launcher: waybar, rofi `base`
-	- terminal: foot `base`, kitty `added`
-	- notifications: dunst `base` → mako `added`
-	- outputs: kanshi `base` → shikane `added` `not in Fedora`
-	- night light: wlsunset `base` → gammastep `added`, wl-gammarelay-rs `added` `not in Fedora`
-	- on-screen display: swayosd `added` `not in Fedora`
-	- screenshots and recording: grim, slurp `base`; satty `added` `not in Fedora`; wf-recorder `added`
-	- clipboard: wl-clipboard `base`; cliphist `added`
-	- portals: xdg-desktop-portal-wlr, xdg-desktop-portal-gtk, oo7-portal `base`
-	- polkit agent: lxqt-policykit `base`
-	- keyring: oo7-daemon + pam_oo7 (unlocks at login) `base`
-- multimedia: pipewire, wireplumber, pipewire-pulseaudio, gstreamer (free plugins), ffmpeg-free, pavucontrol, playerctl `base`
+	- display manager
+		- sddm `base`
+	- compositor
+		- sway `base`
+		- sway-config-fedora `base`
+		- sway-systemd `base`
+		- swaybg `base`
+		- swayidle `base`
+		- swaylock `base`
+	- bar and launcher
+		- waybar `base`
+		- rofi `base`
+	- terminal
+		- foot `base`
+		- kitty `added`
+	- notifications
+		- dunst `base`
+		- mako: replaces dunst `added`
+	- outputs
+		- kanshi `base`
+		- shikane: replaces kanshi `added` `not in Fedora`
+	- night light
+		- wlsunset `base`
+		- gammastep: replaces wlsunset `added`
+		- wl-gammarelay-rs `added` `not in Fedora`
+	- on-screen display
+		- swayosd `added` `not in Fedora`
+	- screenshots and recording
+		- grim `base`
+		- slurp `base`
+		- satty: annotate screenshots `added` `not in Fedora`
+		- wf-recorder `added`
+	- clipboard
+		- wl-clipboard `base`
+		- cliphist: clipboard history `added`
+	- portals
+		- xdg-desktop-portal-wlr `base`
+		- xdg-desktop-portal-gtk `base`
+		- oo7-portal `base`
+	- polkit agent
+		- lxqt-policykit `base`
+	- keyring
+		- oo7-daemon `base`
+		- pam_oo7: unlocks the keyring at login `base`
+- multimedia
+	- pipewire `base`
+	- wireplumber `base`
+	- pipewire-pulseaudio `base`
+	- gstreamer, free plugins `base`
+	- ffmpeg-free `base`
+	- pavucontrol `base`
+	- playerctl `base`
 	- full codecs (RPM Fusion `ffmpeg`, `mesa-va-drivers-freeworld`): `ffmpeg-free` has no H.264 or HEVC. Only host apps need them; flatpaks bring their own `battery?`
-- networking: network-manager-applet + VPN plugins (openvpn, openconnect), blueman, bluez `base`
-- files: Thunar, tumbler (thumbnails), gvfs + gvfs-smb `base`
-	- heif-pixbuf-loader, ffmpegthumbnailer (thumbnails for phone photos and videos, likely matters for Jojo) `battery?`
-- appearance: fonts: Noto, Adwaita, Cantarell, Font Awesome (waybar icons) `base`
-- small tools: imv, wev, brightnessctl `base`
+- networking
+	- network-manager-applet `base`
+	- VPN plugins: openvpn, openconnect `base`
+	- blueman `base`
+	- bluez `base`
+- files
+	- Thunar `base`
+	- tumbler: thumbnails `base`
+	- gvfs + gvfs-smb `base`
+	- heif-pixbuf-loader: thumbnails for phone photos, likely matters for Jojo `battery?`
+	- ffmpegthumbnailer: thumbnails for videos `battery?`
+- appearance
+	- fonts: Noto, Adwaita, Cantarell `base`
+	- Font Awesome: waybar icons `base`
+- small tools
+	- imv: image viewer `base`
+	- wev: shows input events `base`
+	- brightnessctl `base`
 
 ## Config
 
