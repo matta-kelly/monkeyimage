@@ -90,6 +90,11 @@ Firmware, bootloader, kernel, initramfs
 	- sssd `base`
 	- systemd-homed `base`
 	- zram-generator: compressed swap in RAM `base`
+	- git: Bootstrap clones the dotfiles with it, before the User layer exists `added`
+	- rescue kit: for a sick machine, with no container or dotfiles needed. Dev tools (strace, perf) go in a toolbox
+		- htop: it's slow `added`
+		- lm_sensors: it's hot `added`
+		- ncdu: the disk is full `added`
 - security
 	- firewalld: enabled, zone `public`: in only ssh, mdns, dhcpv6. Kept as shipped: nothing needs to reach in, the tailnet included `base`
 	- audit `base`
@@ -132,9 +137,6 @@ Firmware, bootloader, kernel, initramfs
 	- fstrim timer `base`
 	- smartmontools: disk health `added`
 - virtualization
-	- libvirt `added`
-	- qemu `added`
-	- virt-manager `added`
 	- guest agents, for running as a VM: enabled, but each starts only inside its own VM `base`
 		- open-vm-tools
 		- virtualbox-guest-additions
@@ -216,7 +218,8 @@ In `/etc`. Config files the image ships: `files/system/etc/` in the repo. None y
 ## Not in the image
 
 - GUI apps: flatpaks, installed at boot. The recipe carries the "both" list: [[monkeyflatpaks]]
-- CLI and dev tools: [[deeotee]] or a distrobox. So no htop, tmux, vim, fzf in the image
+- CLI and dev tools: [[deeotee]] or a distrobox. So no tmux, vim, fzf in the image
+- VMs (libvirt, qemu-kvm, virt-manager): added when a real need shows up, such as another OS or testing images. A project's own environment is a dev container
 - Arch tools that Atomic replaces: yay, grub-btrfs, timeshift, stow, docker
 - batteries not taken
 	- full codecs (RPM Fusion `ffmpeg`, `mesa-va-drivers-freeworld`): only host apps need them, flatpaks bring their own
