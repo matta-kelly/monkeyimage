@@ -16,10 +16,7 @@ The image of [[Monkeyworks]]: `/usr` and `/etc`, built from one recipe, the same
 
 ### Desk
 - open questions
-	- added packages not in the Fedora 45 repos: how each gets in (all others are in `fedora`, tailscale included)
-		- swayosd: COPR `erikreider/swayosd`, the author's own
-		- keyd: COPR `alternateved/keyd` or `meeuw/keyd`, both 2.6.0
-		- satty: only personal Hyprland COPRs, not on Flathub. Build stage (cargo), or swappy (in Fedora)
+	- nada
 
 ---
 ## Repo
@@ -64,7 +61,7 @@ The image holds what runs at the kernel, system and session stages ([[Monkeywork
 
 In `/usr`. Rows: boot stage. Buckets: the [Arch General recommendations](https://wiki.archlinux.org/title/General_recommendations) sections, plus [[Monkeyworks#ULSAH outline]] where Arch has none (storage, virtualization). Only packages that are a decision or that I touch; the rest of the 1423 are libraries and support (`rpm -qa` in the base image).
 
-Tags: `base` in the base image, `added` by the recipe, `not in Fedora` needs a source (Desk).
+Tags: `base` in the base image, `added` by the recipe.
 
 ### Kernel
 Firmware, bootloader, kernel, initramfs
@@ -120,7 +117,9 @@ Firmware, bootloader, kernel, initramfs
 	- thermald `base`
 	- upower `base`
 - input devices
-	- keyd: key remapping `added` `not in Fedora`
+	- keyd: key remapping per keyboard (chord to chord, F-keys to media keys), which xkb can't do `added`
+		- not in Fedora: built from the upstream release in a build stage, not a COPR. It is a root daemon that sees every key
+		- its config is per keyboard and per machine, so it is not in the image's `/etc`
 - printing
 	- cups `base`
 	- cups-browsed `base`
@@ -162,17 +161,14 @@ Firmware, bootloader, kernel, initramfs
 	- terminal
 		- foot `base`
 	- notifications
-		- dunst `base`
+		- dunst `base`. Also the volume and brightness popup: progress-bar notifications, no OSD package
 	- outputs
 		- kanshi `base`
 	- night light
 		- wlsunset `base`
-	- on-screen display
-		- swayosd `added` `not in Fedora`
 	- screenshots and recording
 		- grim `base`
 		- slurp `base`
-		- satty: annotate screenshots `added` `not in Fedora`
 		- wf-recorder `added`
 	- clipboard
 		- wl-clipboard `base`
@@ -216,7 +212,7 @@ Firmware, bootloader, kernel, initramfs
 ## Config
 
 In `/etc`. Config files the image ships: `files/system/etc/` in the repo. None yet.
-- planned: keyd layout, logind lid-close (clamshell), geoclue (location for the night light)
+- planned: logind lid-close (clamshell), geoclue (location for the night light)
 
 ## Not in the image
 
