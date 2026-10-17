@@ -173,7 +173,6 @@ Firmware, bootloader, kernel, initramfs
 		- kitty `added`
 	- notifications
 		- dunst `base`
-		- mako: replaces dunst `added`
 	- outputs
 		- kanshi `base`
 		- shikane: replaces kanshi `added` `not in Fedora`
