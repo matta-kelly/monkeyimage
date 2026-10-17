@@ -25,7 +25,7 @@ This folder is the repo: `github.com/matta-kelly/monkeyimage`, public, made from
 - recipe: `recipes/recipe.yml`; it can split into more files ([from-file](https://blue-build.org/how-to/multiple-files/))
 - files copied into the image: `files/system/` → `/`
 - CI: `.github/workflows/build.yml` (BlueBuild Action). Builds on every push to main, on pull requests, and daily at 06:00 UTC for Fedora's base updates
-	- pushes signed images to `ghcr.io/matta-kelly/monkeyimage`, public: `latest`, `<commit>-45`, and `pr-<n>-45` for pull requests
+	- pushes signed images to `ghcr.io/matta-kelly/monkeyimage`, public: `latest`, `<commit>-44`, and `pr-<n>-44` for pull requests (the suffix is the Fedora version)
 	- signing: `cosign.pub` in the repo; the private key is the repo secret `SIGNING_SECRET`, with a copy in Vaultwarden (`monkeyimage-cosign-signing-key`)
 	- update size: not rechunked. A rebuild with nothing changed still costs each machine about 248 MB. Rechunking measured worse (457 MB). Options and measurements: [issue #8](https://github.com/matta-kelly/monkeyimage/issues/8)
 - an offline install ISO can be made from the image ([generate ISO](https://blue-build.org/how-to/generate-iso/))
@@ -33,7 +33,7 @@ This folder is the repo: `github.com/matta-kelly/monkeyimage`, public, made from
 
 ## Base
 
-`quay.io/fedora-ostree-desktops/sway-atomic:45`, official Fedora Sway Atomic.
+`quay.io/fedora-ostree-desktops/sway-atomic:44`, official Fedora Sway Atomic. Pinned to the latest released Fedora: 45 is pre-release, and goes in when it is released
 - [Sway Atomic Home](https://fedoraproject.org/atomic-desktops/sway/), [Atomic Desktops docs](https://docs.fedoraproject.org/en-US/atomic-desktops/)
 - 1423 packages in all, about 180 of them over the bare atomic base
 - the value is not Sway, it is the plumbing Fedora tests together: login, keyring, wifi, VPN, printing, audio, power
