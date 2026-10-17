@@ -170,7 +170,6 @@ Firmware, bootloader, kernel, initramfs
 		- rofi `base`
 	- terminal
 		- foot `base`
-		- kitty `added`
 	- notifications
 		- dunst `base`
 	- outputs
