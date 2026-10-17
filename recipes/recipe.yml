@@ -15,4 +15,30 @@ modules:
       - source: system
         destination: / # files/system/* goes to / in the image
 
+  - type: dnf # added packages, all from the Fedora repos: monkeyimage.md says why each
+    install:
+      packages:
+        # system
+        - git # Bootstrap clones the dotfiles with it
+        - htop # rescue kit: slow, hot, full
+        - lm_sensors
+        - ncdu
+        - tailscale
+        - distrobox
+        - just
+        - smartmontools
+        - pam-u2f
+        - pamu2fcfg
+        - yubikey-manager
+        # session
+        - wf-recorder
+        - heif-pixbuf-loader
+        - ffmpegthumbnailer
+
+  - type: default-flatpaks # installed at boot, from Flathub
+    configurations:
+      - scope: system # the "both" list: every user gets these
+        install:
+          - com.github.tchx84.Flatseal
+
   - type: signing # policy and keys, so machines can check the image is signed
