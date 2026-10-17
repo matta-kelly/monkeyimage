@@ -126,6 +126,8 @@ Firmware, bootloader, kernel, initramfs
 - input devices
 	- keyd: key remapping per keyboard (chord to chord, F-keys to media keys), which xkb can't do `added`
 		- not in Fedora: built from the upstream release in a build stage, not a COPR. It is a root daemon that sees every key
+		- pinned to v2.6.0, with the tarball's sha256, in the recipe's `keyd` stage. Bump: change the version and the sha256 together (`curl -fsSL <tarball URL> | sha256sum`)
+		- `keyd.service` is enabled. With no config, keyd matches no keyboard and does nothing
 		- its config is per keyboard and per machine, so it is not in the image's `/etc`
 - printing
 	- cups `base`
