@@ -127,7 +127,7 @@ Firmware, bootloader, kernel, initramfs
 	- keyd: key remapping per keyboard (chord to chord, F-keys to media keys), which xkb can't do `added`
 		- not in Fedora: built from the upstream release in a build stage, not a COPR. It is a root daemon that sees every key
 		- pinned to v2.6.0, with the tarball's sha256, in the recipe's `keyd` stage. Bump: change the version and the sha256 together (`curl -fsSL <tarball URL> | sha256sum`)
-		- `keyd.service` is enabled. With no config, keyd matches no keyboard and does nothing
+		- `keyd.service` is enabled. With no config, keyd grabs no keyboard
 		- its config is per keyboard and per machine, so it is not in the image's `/etc`
 - printing
 	- cups `base`
@@ -216,9 +216,11 @@ Firmware, bootloader, kernel, initramfs
 
 ## Config
 
-In `/etc`. What the image ships there: config files from `files/system/etc/` in the repo, and the unit links the recipe's `systemd` module makes.
+In `/etc`. What the image ships there: config files from `files/system/etc/` in the repo, the unit links the recipe's `systemd` module makes, and what a build stage installs.
 - `rpm-ostreed.conf`: `AutomaticUpdatePolicy=stage`. An update downloads and stages the new image; it takes over at the next reboot ([[Monkeyworks#Update]])
 - `rpm-ostreed-automatic.timer`: a unit link, enabled by the `systemd` module. It runs the policy once a day
+- `keyd.service`: a unit link, enabled by the `systemd` module
+- `/etc/keyd/`: empty, from the keyd stage. Keep it: keyd's source exits at startup when the directory is missing. Per-host config goes in it, outside the image ([deeotee#1](https://github.com/matta-kelly/deeotee/issues/1))
 - planned: logind lid-close (clamshell)
 
 ## Not in the image
