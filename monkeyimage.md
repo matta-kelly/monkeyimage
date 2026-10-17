@@ -214,8 +214,10 @@ Firmware, bootloader, kernel, initramfs
 
 ## Config
 
-In `/etc`. Config files the image ships: `files/system/etc/` in the repo. None yet.
-- planned: logind lid-close (clamshell), geoclue (location for the night light)
+In `/etc`. What the image ships there: config files from `files/system/etc/` in the repo, and the unit links the recipe's `systemd` module makes.
+- `rpm-ostreed.conf`: `AutomaticUpdatePolicy=stage`. An update downloads and stages the new image; it takes over at the next reboot ([[Monkeyworks#Update]])
+- `rpm-ostreed-automatic.timer`: a unit link, enabled by the `systemd` module. It runs the policy once a day
+- planned: logind lid-close (clamshell)
 
 ## Not in the image
 

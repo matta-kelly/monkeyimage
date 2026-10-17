@@ -41,4 +41,9 @@ modules:
         install:
           - com.github.tchx84.Flatseal
 
+  - type: systemd
+    system:
+      enabled:
+        - rpm-ostreed-automatic.timer # daily download and stage, with the policy in /etc/rpm-ostreed.conf
+
   - type: signing # policy and keys, so machines can check the image is signed
