@@ -27,7 +27,7 @@ This folder is the repo: `github.com/matta-kelly/monkeyimage`, public, made from
 - CI: `.github/workflows/build.yml` (BlueBuild Action). Builds on every push to main, on pull requests, and daily at 06:00 UTC for Fedora's base updates
 	- pushes signed images to `ghcr.io/matta-kelly/monkeyimage`, public: `latest`, `<commit>-44`, and `pr-<n>-44` for pull requests (the suffix is the Fedora version)
 	- signing: `cosign.pub` in the repo; the private key is the repo secret `SIGNING_SECRET`, with a copy in Vaultwarden (`monkeyimage-cosign-signing-key`)
-	- update size: not rechunked. A rebuild with nothing changed still costs each machine about 248 MB. Rechunking measured worse (457 MB). Options and measurements: [issue #8](https://github.com/matta-kelly/monkeyimage/issues/8)
+	- update size: not rechunked. A rebuild with nothing changed still costs each machine about 248 MB. Rechunking measured worse (457 MB). Options and measurements: [[smaller-image-updates]]
 - an offline install ISO can be made from the image ([generate ISO](https://blue-build.org/how-to/generate-iso/))
 - public, so nothing goes in that names my network or is personal: that goes in [[deeotee]] or the Jojo layer
 
@@ -220,7 +220,7 @@ In `/etc`. What the image ships there: config files from `files/system/etc/` in 
 - `rpm-ostreed.conf`: `AutomaticUpdatePolicy=stage`. An update downloads and stages the new image; it takes over at the next reboot ([[Monkeyworks#Update]])
 - `rpm-ostreed-automatic.timer`: a unit link, enabled by the `systemd` module. It runs the policy once a day
 - `keyd.service`: a unit link, enabled by the `systemd` module
-- `/etc/keyd/`: empty, from the keyd stage. Keep it: keyd's source exits at startup when the directory is missing. Per-host config goes in it, outside the image ([deeotee#1](https://github.com/matta-kelly/deeotee/issues/1))
+- `/etc/keyd/`: empty, from the keyd stage. Keep it: keyd's source exits at startup when the directory is missing. Per-host config goes in it, outside the image ([[per-host-system-config]])
 - planned: logind lid-close (clamshell)
 
 ## Not in the image
