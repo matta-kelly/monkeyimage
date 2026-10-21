@@ -3,7 +3,7 @@ type: component
 description: "The image of Monkeyworks: what owns `/usr` and `/etc`. The base it builds on and why, which packages it holds by boot stage, and the config it ships. Reference before adding a package to the machine or changing the base."
 status: planned
 ---
-The image of [[Monkeyworks]]: `/usr` and `/etc`, built from one recipe, the same on every machine.
+The image of [[monkeyworks]]: `/usr` and `/etc`, built from one recipe, the same on every machine.
 - [[#Repo]] where the recipe lives
 - [[#Base]] what it builds on, and why
 - [[#What gets baked]] the rule, by boot stage
@@ -11,8 +11,8 @@ The image of [[Monkeyworks]]: `/usr` and `/etc`, built from one recipe, the same
 - [[#Config]] `/etc`, the config files it ships
 - [[#Not in the image]] what goes somewhere else
 
-- [[Monkeyworks#Build]]: how the recipe becomes an image (BlueBuild)
-- [[Monkeyworks#Update]]: how a machine gets the new image
+- [[monkeyworks#Build]]: how the recipe becomes an image (BlueBuild)
+- [[monkeyworks#Update]]: how a machine gets the new image
 
 ### Desk
 - open questions
@@ -47,7 +47,7 @@ This folder is the repo: `github.com/matta-kelly/monkeyimage`, public, made from
 
 ## What gets baked
 
-The image holds what runs at the kernel, system and session stages ([[Monkeyworks#Boot sequence]]).
+The image holds what runs at the kernel, system and session stages ([[monkeyworks#Boot sequence]]).
 
 | Stage / kind                 | Goes in                           |
 | ---------------------------- | --------------------------------- |
@@ -61,7 +61,7 @@ The image holds what runs at the kernel, system and session stages ([[Monkeywork
 
 ## Packages
 
-In `/usr`. Rows: boot stage. Buckets: the [Arch General recommendations](https://wiki.archlinux.org/title/General_recommendations) sections, plus [[Monkeyworks#ULSAH outline]] where Arch has none (storage, virtualization). Only packages that are a decision or that I touch; the rest of the 1423 are libraries and support (`rpm -qa` in the base image).
+In `/usr`. Rows: boot stage. Buckets: the [Arch General recommendations](https://wiki.archlinux.org/title/General_recommendations) sections, plus [[monkeyworks#ULSAH outline]] where Arch has none (storage, virtualization). Only packages that are a decision or that I touch; the rest of the 1423 are libraries and support (`rpm -qa` in the base image).
 
 Tags: `base` in the base image, `added` by the recipe.
 
@@ -217,7 +217,7 @@ Firmware, bootloader, kernel, initramfs
 ## Config
 
 In `/etc`. What the image ships there: config files from `files/system/etc/` in the repo, the unit links the recipe's `systemd` module makes, and what a build stage installs.
-- `rpm-ostreed.conf`: `AutomaticUpdatePolicy=stage`. An update downloads and stages the new image; it takes over at the next reboot ([[Monkeyworks#Update]])
+- `rpm-ostreed.conf`: `AutomaticUpdatePolicy=stage`. An update downloads and stages the new image; it takes over at the next reboot ([[monkeyworks#Update]])
 - `rpm-ostreed-automatic.timer`: a unit link, enabled by the `systemd` module. It runs the policy once a day
 - `keyd.service`: a unit link, enabled by the `systemd` module
 - `/etc/keyd/`: empty, from the keyd stage. Keep it: keyd's source exits at startup when the directory is missing. Per-host config goes in it, outside the image ([[per-host-system-config]])
