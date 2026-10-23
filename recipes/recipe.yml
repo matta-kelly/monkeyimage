@@ -34,6 +34,7 @@ modules:
       packages:
         # system
         - git # Bootstrap clones the dotfiles with it
+        - chezmoi # Bootstrap applies each user's dotfiles with it
         - htop # rescue kit: slow, hot, full
         - lm_sensors
         - ncdu
