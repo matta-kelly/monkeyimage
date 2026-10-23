@@ -1,0 +1,13 @@
+[Unit]
+Description=Night light: warm the screen from sunset to sunrise
+PartOf=graphical-session.target
+
+[Service]
+# Override in ~/.config/systemd/user/wlsunset.service.d/*.conf, for example with a location:
+#   Environment=WLSUNSET_ARGS="-l <latitude> -L <longitude>"
+Environment=WLSUNSET_ARGS="-S 07:00 -s 20:00"
+ExecStart=/usr/bin/wlsunset $WLSUNSET_ARGS
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target
