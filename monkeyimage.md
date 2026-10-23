@@ -126,7 +126,7 @@ Firmware, bootloader, kernel, initramfs
 - power management
 	- tuned + tuned-ppd: power profiles `base`
 	- thermald `base`
-	- upower `base`
+	- upower `base`. Its shipped `UPower.conf` is the safety net: at 2% it powers off (hybrid sleep and hibernate are tried first; this image has neither)
 - input devices
 	- keyd: key remapping per keyboard (chord to chord, F-keys to media keys), which xkb can't do `added`
 		- not in Fedora: built from the upstream release in a build stage, not a COPR. It is a root daemon that sees every key
@@ -224,6 +224,7 @@ In `/etc`. What the image ships there: config files from `files/system/etc/` in 
 - `rpm-ostreed.conf`: `AutomaticUpdatePolicy=stage`. An update downloads and stages the new image; it takes over at the next reboot ([[monkeyworks#Update]])
 - `rpm-ostreed-automatic.timer`: a unit link, enabled by the `systemd` module. It runs the policy once a day
 - `keyd.service`: a unit link, enabled by the `systemd` module
+- `battery-warn.timer`: a user unit, enabled for every user by the `systemd` module. In the graphical session, every minute, `/usr/bin/battery-warn` asks UPower and warns once at 20% and once at 10%, through dunst. A user changes the levels with a drop-in in `~/.config/systemd/user/battery-warn.service.d/`, or turns it off with `systemctl --user mask battery-warn.timer`
 - `/etc/keyd/`: empty, from the keyd stage. Keep it: keyd's source exits at startup when the directory is missing. Per-host config goes in it, outside the image ([[per-host-system-config]])
 - `sway/config.d/70-lid.conf`: the laptop panel (`eDP-1`) turns off while the lid is closed, so a docked machine uses only its external screens. Undocked, logind still sleeps on lid close. Fedora's sway config reads `/etc/sway/config.d/`; a user's same-named file in `~/.config/sway/config.d/` overrides it
 
