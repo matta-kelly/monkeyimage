@@ -55,8 +55,11 @@ The image holds what runs at the kernel, system and session stages ([[monkeywork
 | apps                         | a flatpak ([[monkeyflatpaks]])    |
 | project                      | its dev container                 |
 | a CLI tool only I use        | [[deeotee]] or a distrobox        |
+| config: stable defaults for every user | the image's `/etc` ([[monkeyworks#Config layering]]) |
+| config: identity, or changed often | the user's `~`: [[deeotee]] for me |
 
 - Jojo gets the same image: anything baked in is hers too
+- each user can override shared config in their own `~`: a same-named file wins
 - an image change means a rebuild and a reboot: the image holds what is stable
 
 ## Packages
