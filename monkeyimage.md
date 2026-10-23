@@ -173,7 +173,7 @@ Firmware, bootloader, kernel, initramfs
 	- notifications
 		- dunst `base`. Also the volume and brightness popup: progress-bar notifications, no OSD package
 	- outputs
-		- kanshi `base`
+		- kanshi `base`. Started by Fedora's `kanshi.service` for a user with profiles ([[#Config]])
 	- night light
 		- wlsunset `base`. Started by the image's `wlsunset.service` ([[#Config]])
 	- screenshots and recording
@@ -226,6 +226,7 @@ In `/etc`. What the image ships there: config files from `files/system/etc/` in 
 - `keyd.service`: a unit link, enabled by the `systemd` module
 - `battery-warn.timer`: a user unit, enabled for every user by the `systemd` module. In the graphical session, every minute, `/usr/bin/battery-warn` asks UPower and warns once at 20% and once at 10%, through dunst. A user changes the levels with a drop-in in `~/.config/systemd/user/battery-warn.service.d/`, or turns it off with `systemctl --user mask battery-warn.timer`
 - `wlsunset.service`: a user unit, enabled for every user by the `systemd` module. Night light from 20:00 to 07:00 (`WLSUNSET_ARGS`). A user sets a location or other times with a drop-in in `~/.config/systemd/user/wlsunset.service.d/`; a location stays out of the image, which is public
+- `kanshi.service`: Fedora's user unit, enabled for every user by the `systemd` module. The image's drop-in `kanshi.service.d/50-user-config.conf` starts it only when the user has `~/.config/kanshi/config`. The profiles are each user's own; with none, sway places new screens itself
 - `/etc/keyd/`: empty, from the keyd stage. Keep it: keyd's source exits at startup when the directory is missing. Per-host config goes in it, outside the image ([[per-host-system-config]])
 - `sway/config.d/70-lid.conf`: the laptop panel (`eDP-1`) turns off while the lid is closed, so a docked machine uses only its external screens. Undocked, logind still sleeps on lid close. Fedora's sway config reads `/etc/sway/config.d/`; a user's same-named file in `~/.config/sway/config.d/` overrides it
 

@@ -70,5 +70,6 @@ modules:
       enabled:
         - battery-warn.timer # every user, in the graphical session: warns at 20% and 10%
         - wlsunset.service # every user, in the graphical session: warm from 20:00 to 07:00
+        - kanshi.service # Fedora's unit; runs only for a user with ~/.config/kanshi/config
 
   - type: signing # policy and keys, so machines can check the image is signed
