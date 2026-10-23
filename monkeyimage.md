@@ -97,6 +97,8 @@ Firmware, bootloader, kernel, initramfs
 	- zram-generator: compressed swap in RAM `base`
 	- git: Bootstrap clones the dotfiles with it, before the User layer exists `added`
 	- chezmoi: Bootstrap applies each user's dotfiles with it, so every user (Jojo too) starts from one command `added`
+	- rbw: Bitwarden CLI with an agent that holds the unlocked vault; each user's dotfiles read Vaultwarden through it. Not Bitwarden's own `bw`: Fedora does not package it, and its binary is 143 MB `added`
+	- gh: GitHub CLI; `gh auth login`, and git's credential helper for GitHub `added`
 	- rescue kit: for a sick machine, with no container or dotfiles needed. Dev tools (strace, perf) go in a toolbox
 		- htop: it's slow `added`
 		- lm_sensors: it's hot `added`
