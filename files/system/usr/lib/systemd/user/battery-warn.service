@@ -1,0 +1,8 @@
+[Unit]
+Description=Warn when the battery runs low
+
+[Service]
+Type=oneshot
+# Override in ~/.config/systemd/user/battery-warn.service.d/*.conf
+Environment=BATTERY_WARN_LOW=20 BATTERY_WARN_CRITICAL=10
+ExecStart=/usr/bin/battery-warn

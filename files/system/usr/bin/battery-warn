@@ -1,0 +1,32 @@
+#!/bin/bash
+# Warn the user when the battery runs low: once per level, while discharging.
+# Levels come from battery-warn.service's environment; a user drop-in can change them.
+# At its own PercentageAction (UPower.conf, 2%), UPower suspends the machine.
+set -euo pipefail
+
+low=${BATTERY_WARN_LOW:-20}
+critical=${BATTERY_WARN_CRITICAL:-10}
+last_file=${XDG_RUNTIME_DIR:?}/battery-warn
+
+# DisplayDevice is UPower's single view of all batteries
+info=$(upower -i /org/freedesktop/UPower/devices/DisplayDevice)
+[[ $info =~ state:\ +([a-z-]+) ]] || exit 0
+state=${BASH_REMATCH[1]}
+[[ $info =~ percentage:\ +([0-9]+) ]] || exit 0
+percent=${BASH_REMATCH[1]}
+
+if [ "$state" != discharging ]; then
+    rm -f "$last_file"
+    exit 0
+fi
+
+last=$(cat "$last_file" 2>/dev/null || true)
+if (( percent <= critical )); then
+    [ "$last" = critical ] && exit 0
+    notify-send -u critical -i battery-caution-symbolic "Battery at ${percent}%" "Plug in now. The machine suspends at 2%."
+    echo critical > "$last_file"
+elif (( percent <= low )); then
+    [[ $last == low || $last == critical ]] && exit 0
+    notify-send -i battery-low-symbolic "Battery at ${percent}%" "Plug in soon."
+    echo low > "$last_file"
+fi
