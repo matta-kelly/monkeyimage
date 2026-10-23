@@ -1,7 +1,6 @@
 [Unit]
 Description=Check the battery level every minute
 PartOf=graphical-session.target
-After=graphical-session.target
 
 [Timer]
 OnActiveSec=1min
