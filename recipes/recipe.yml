@@ -66,5 +66,8 @@ modules:
       enabled:
         - rpm-ostreed-automatic.timer # daily download and stage, with the policy in /etc/rpm-ostreed.conf
         - keyd.service # with no config, keyd matches no keyboard and does nothing
+    user:
+      enabled:
+        - battery-warn.timer # every user, in the graphical session: warns at 20% and 10%
 
   - type: signing # policy and keys, so machines can check the image is signed
