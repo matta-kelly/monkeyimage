@@ -126,7 +126,7 @@ Firmware, bootloader, kernel, initramfs
 - power management
 	- tuned + tuned-ppd: power profiles `base`
 	- thermald `base`
-	- upower `base`. Its shipped `UPower.conf` is the safety net: at 2% it powers off (hybrid sleep and hibernate are tried first; this image has neither)
+	- upower `base`. Its shipped `UPower.conf` is the safety net: `CriticalPowerAction=Auto` suspends at 2%. Kept as shipped; a drop-in in `/etc/UPower/UPower.conf.d/` with `CriticalPowerAction=PowerOff` would shut down instead
 - input devices
 	- keyd: key remapping per keyboard (chord to chord, F-keys to media keys), which xkb can't do `added`
 		- not in Fedora: built from the upstream release in a build stage, not a COPR. It is a root daemon that sees every key
