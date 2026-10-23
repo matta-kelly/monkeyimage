@@ -124,7 +124,7 @@ Firmware, bootloader, kernel, initramfs
 	- avahi: local discovery `base`
 	- openvpn `base`
 	- wireguard-tools `base`
-	- tailscale `added`
+	- tailscale: `tailscaled.service` enabled; a machine joins the mesh with `tailscale up` ([[monkeyworks#Bootstrap]]) `added`
 - power management
 	- tuned + tuned-ppd: power profiles `base`
 	- thermald `base`
