@@ -93,6 +93,7 @@ Firmware, bootloader, kernel, initramfs
 	- systemd-homed `base`
 	- zram-generator: compressed swap in RAM `base`
 	- git: Bootstrap clones the dotfiles with it, before the User layer exists `added`
+	- chezmoi: Bootstrap applies each user's dotfiles with it, so every user (Jojo too) starts from one command `added`
 	- rescue kit: for a sick machine, with no container or dotfiles needed. Dev tools (strace, perf) go in a toolbox
 		- htop: it's slow `added`
 		- lm_sensors: it's hot `added`
