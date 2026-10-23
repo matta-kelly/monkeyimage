@@ -35,6 +35,8 @@ modules:
         # system
         - git # Bootstrap clones the dotfiles with it
         - chezmoi # Bootstrap applies each user's dotfiles with it
+        - rbw # Bitwarden CLI with an agent: the personal path reads Vaultwarden through it
+        - gh # GitHub CLI: login, and git's credential helper
         - htop # rescue kit: slow, hot, full
         - lm_sensors
         - ncdu
