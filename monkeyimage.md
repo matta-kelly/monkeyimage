@@ -24,7 +24,8 @@ The image of [[monkeyworks]]: `/usr` and `/etc`, built from one recipe, the same
 This folder is the repo: `github.com/matta-kelly/monkeyimage`, public, made from [blue-build/template](https://github.com/blue-build/template).
 - recipe: `recipes/recipe.yml`; it can split into more files ([from-file](https://blue-build.org/how-to/multiple-files/))
 - files copied into the image: `files/system/` → `/`
-- CI: `.github/workflows/build.yml` (BlueBuild Action). Builds on every push to main, on pull requests, and daily at 06:00 UTC for Fedora's base updates
+- checks: `just check` runs `bluebuild generate recipes/recipe.yml` with the BlueBuild CLI container, pinned by digest, on a copy of the tree. `.github/workflows/checks.yml` runs it on every push to every branch, then lot's lint with this repo at the pushed commit, in the job `checks` ([[ci]])
+- CI: `.github/workflows/build.yml` (BlueBuild Action). Builds on every push to any branch that changes a file other than `*.md`, on pull requests, and daily at 06:00 UTC for Fedora's base updates
 	- pushes signed images to `ghcr.io/matta-kelly/monkeyimage`, public: `latest`, `<commit>-44`, and `pr-<n>-44` for pull requests (the suffix is the Fedora version)
 	- signing: `cosign.pub` in the repo; the private key is the repo secret `SIGNING_SECRET`, with a copy in Vaultwarden (`monkeyimage-cosign-signing-key`)
 	- update size: not rechunked. A rebuild with nothing changed still costs each machine about 248 MB. Rechunking measured worse (457 MB). Options and measurements: [[smaller-image-updates]]

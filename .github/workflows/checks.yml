@@ -1,0 +1,75 @@
+# The check of monkeyimage on every push, to every branch, main included: `just check` (the recipe generates a
+# Containerfile), then lot's graph with monkeyimage at the pushed commit. build.yml stays the image build, path-filtered
+# and not required.
+# The ruleset on main requires the job `checks` on the exact commit, so the trigger has no path filter (a required check
+# that a path filter skips stays pending).
+name: checks
+
+on:
+  push:
+  # Run by hand, for example after the token is set or rotated.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One group per ref: a newer push to a branch cancels the older run. On main a running run is not cancelled, but GitHub
+# keeps one waiting run per group, so a newer push replaces a waiting one.
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  checks:
+    # A named release, with podman: ubuntu-latest moves to a new one with no commit here.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4
+        with:
+          just-version: "1.56.0"
+      - run: just check
+      # lot's graph, with monkeyimage at the pushed commit: monkeyimage's notes link into lot, so only lot's lint, from
+      # lot's root, can check them. lot (main) goes to lot/, with its submodules, and the mkultra/monkeyimage submodule
+      # at the pushed commit. lot and most of its submodules are private, and the run's own token reads only
+      # monkeyimage: the secret LOT_SUBMODULES_TOKEN is a fine-grained token with Contents: read on lot and on its
+      # private submodules.
+      - name: The token for lot and its private submodules is set
+        env:
+          TOKEN: ${{ secrets.LOT_SUBMODULES_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "::error::The secret LOT_SUBMODULES_TOKEN is not set: a fine-grained token with Contents: read on lot and its private submodules."
+            exit 1
+          fi
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: matta-kelly/lot
+          ref: main
+          path: lot
+          token: ${{ secrets.LOT_SUBMODULES_TOKEN }}
+          persist-credentials: false
+      - name: lot's submodules, with monkeyimage at the pushed commit
+        working-directory: lot
+        env:
+          TOKEN: ${{ secrets.LOT_SUBMODULES_TOKEN }}
+        run: |
+          git config --global url."https://x-access-token:${TOKEN}@github.com/".insteadOf "https://github.com/"
+          git submodule update --init --recursive --depth 1
+          git -C mkultra/monkeyimage fetch --depth 1 origin "$GITHUB_SHA"
+          git -C mkultra/monkeyimage checkout --detach "$GITHUB_SHA"
+          git submodule status mkultra/monkeyimage
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: lot/package-lock.json
+      - name: lot's packages
+        working-directory: lot
+        run: npm ci
+      - name: lot's graph, with monkeyimage in it
+        working-directory: lot
+        run: npm run lint
