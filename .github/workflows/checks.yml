@@ -33,10 +33,10 @@ jobs:
           just-version: "1.56.0"
       - run: just check
       # lot's graph, with monkeyimage at the pushed commit: monkeyimage's notes link into lot, so only lot's lint, from
-      # lot's root, can check them. lot (main) goes to lot/, with its submodules, and the mkultra/monkeyimage submodule
-      # at the pushed commit. lot and most of its submodules are private, and the run's own token reads only
-      # monkeyimage: the secret LOT_SUBMODULES_TOKEN is a fine-grained token with Contents: read on lot and on its
-      # private submodules.
+      # lot's root, can check them. lot (main) goes to lot/, with its submodules (ours at their main), and the
+      # mkultra/monkeyimage submodule at the pushed commit. lot and most of its submodules are private, and the run's
+      # own token reads only monkeyimage: the secret LOT_SUBMODULES_TOKEN is a fine-grained token with Contents: read on
+      # lot and on its private submodules.
       - name: The token for lot and its private submodules is set
         env:
           TOKEN: ${{ secrets.LOT_SUBMODULES_TOKEN }}
@@ -52,16 +52,24 @@ jobs:
           path: lot
           token: ${{ secrets.LOT_SUBMODULES_TOKEN }}
           persist-credentials: false
-      - name: lot's submodules, with monkeyimage at the pushed commit
+      - name: lot's submodules, ours at main and monkeyimage at the pushed commit
         working-directory: lot
         env:
           TOKEN: ${{ secrets.LOT_SUBMODULES_TOKEN }}
         run: |
           git config --global url."https://x-access-token:${TOKEN}@github.com/".insteadOf "https://github.com/"
           git submodule update --init --recursive --depth 1
+          # Our repos (matta-kelly's, read from .gitmodules by URL) go to their main: every main is gated, so the mains
+          # are the graph, and lot's pins are lot's own record. Others' repos stay at lot's pin, so an upstream change
+          # cannot break this gate.
+          ours=$(git config -f .gitmodules --get-regexp '^submodule\..*\.url$' '^https://github\.com/matta-kelly/' |
+            while read -r key _; do git config -f .gitmodules --get "${key%.url}.path"; done)
+          if [ -z "$ours" ]; then echo "::error::No submodule of matta-kelly's in .gitmodules."; exit 1; fi
+          # shellcheck disable=SC2086 # one path per word
+          git submodule update --remote --depth 1 -- $ours
           git -C mkultra/monkeyimage fetch --depth 1 origin "$GITHUB_SHA"
           git -C mkultra/monkeyimage checkout --detach "$GITHUB_SHA"
-          git submodule status mkultra/monkeyimage
+          git submodule status
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
