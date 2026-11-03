@@ -27,7 +27,7 @@ The repo: `github.com/matta-kelly/monkeyimage`, public, made from [blue-build/te
 	- signing: `cosign.pub` in the repo; the private key is the repo secret `SIGNING_SECRET`, with a copy in Vaultwarden (`monkeyimage-cosign-signing-key`)
 	- update size: not rechunked. A rebuild with nothing changed still costs each machine about 248 MB. Rechunking measured worse (457 MB)
 - an offline install ISO can be made from the image ([generate ISO](https://blue-build.org/how-to/generate-iso/))
-- public, so nothing goes in that names our network or is personal: that goes in each person's dotfiles
+- public, so nothing goes in that names our network or is personal: that goes in each person's [[dotfiles]]
 
 ## Base
 
@@ -52,9 +52,9 @@ The image holds what runs at the kernel, system and session stages ([[machine]],
 | kernel, system, session      | the image                         |
 | apps                         | a flatpak ([[monkeyflatpaks]])    |
 | project                      | its dev container                 |
-| a CLI tool one person uses   | their dotfiles or a distrobox     |
+| a CLI tool one person uses   | their [[dotfiles]] or a distrobox |
 | config: stable defaults for every user | the image's `/etc` ([[how-it-works]], Config layering) |
-| config: identity, or changed often | the person's `~`, from their dotfiles |
+| config: identity, or changed often | the person's `~`, from their [[dotfiles]] |
 
 - Jojo gets the same image: anything baked in is hers too
 - each user can override shared config in their own `~`: a same-named file wins
@@ -237,7 +237,7 @@ In `/etc`. What the image ships there: config files from `files/system/etc/` in 
 ## Not in the image
 
 - GUI apps: flatpaks, installed at boot. The recipe carries the "both" list: [[monkeyflatpaks]]
-- CLI and dev tools: each person's dotfiles or a distrobox. So no tmux, vim, fzf in the image
+- CLI and dev tools: each person's [[dotfiles]] or a distrobox. So no tmux, vim, fzf in the image
 - VMs (libvirt, qemu-kvm, virt-manager): added when a real need shows up, such as another OS or testing images. A project's own environment is a dev container
 - Arch tools that Atomic replaces: yay, grub-btrfs, timeshift, stow, docker
 - batteries not taken

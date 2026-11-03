@@ -12,7 +12,7 @@ The model of the whole machine, which every part follows.
 ---
 ## Where things live
 Basis: the Filesystem Hierarchy Standard, plus the OSTree split, which is how Fedora documents Atomic. Each path has one owner and one way it changes.
-- sorting rule: the machine goes in the image, a person goes in their dotfiles, a project goes in its container
+- sorting rule: the machine goes in the image, a person goes in their [[dotfiles]], a project goes in its container
 - the rule, by boot stage: [[monkeyimage]] (What gets baked)
 
 | Path                         | Holds                                              | Owner                                   | Changes by           |

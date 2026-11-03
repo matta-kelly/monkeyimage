@@ -9,7 +9,7 @@ Promise: each user's data on this machine gets snapshotted every night, kept per
 - Restore
 
 - part of the Data layer in [[monkeyworks]]
-- the default service and timer go in [[monkeyimage]]; a person's overrides go in their own dotfiles
+- the default service and timer go in [[monkeyimage]]; a person's overrides go in their own [[dotfiles]]
 
 ---
 ## Engine

@@ -32,6 +32,7 @@ Monkeyworks: one Fedora Sway Atomic image, the same on every machine, with each 
 - [[you]]: what is yours alone
 	- Account: who you are on the machine and online
 	- Dotfiles: your config, in your own repo
+	- [[dotfiles]]: what goes in them, the change-check-apply-undo loop, and files outside `~`
 	- Secrets: keys and passwords, from your vault
 	- Backup: your files, every night
 	- Shell and terminal: the prompt, aliases, the terminal

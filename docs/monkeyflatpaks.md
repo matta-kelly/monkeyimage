@@ -10,7 +10,7 @@ The Apps layer of [[monkeyworks]]: every GUI app is a flatpak, and every flatpak
 - Open
 
 - [[monkeyimage]]: its recipe holds the "both" list
-- each person's dotfiles: hold their own list
+- each person's [[dotfiles]]: hold their own list
 - the "just Jojo" list: hers; where it lives is open, her own recipe or her dotfiles
 
 ---

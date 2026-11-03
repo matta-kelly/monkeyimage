@@ -24,11 +24,7 @@ Each person brings their own identity; the image bakes none of it.
 
 ## Dotfiles
 
-Your config, in your own repo, applied with chezmoi.
-- `chezmoi apply`: your repo to `~`. `chezmoi re-add`: edits made in `~` back to the repo
-- `chezmoi diff` before an apply shows what would change
-- add to the shared defaults with drop-ins; replace a whole file only for a named reason ([[how-it-works]], Config layering)
-- system files (`/etc`) a person needs, such as a keyboard remap: the dotfiles carry them, and a `sudo` script installs them
+Your config, in your own repo, applied with chezmoi: what goes in it, how to change it and how to undo a change are in [[dotfiles]].
 
 ## Secrets
 
