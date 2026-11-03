@@ -20,7 +20,7 @@ New machine to whole, in two parts: the machine, once per machine; then each per
 	- `rpm-ostree rebase ostree-unverified-registry:ghcr.io/matta-kelly/monkeyimage:latest`: the first image brings the signing key and policy
 	- `rpm-ostree rebase ostree-image-signed:docker://ghcr.io/matta-kelly/monkeyimage:latest`: from here every image is checked
 	- the flatpaks install at the first boot ([[monkeyflatpaks]])
-3. join the mesh (headscale): `sudo tailscale up --login-server <your headscale URL> --auth-key <key>`, with a single-use key from whoever runs the headscale server ([[sop-mesh-nodes]]). The vault is on the mesh, so this comes before each person's steps
+3. join the mesh (headscale): `sudo tailscale up --login-server <your headscale URL> --auth-key <key>`, with a single-use key from whoever runs the headscale server. The vault is on the mesh, so this comes before each person's steps
 
 ## Each person
 
