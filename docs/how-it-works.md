@@ -20,7 +20,7 @@ Basis: the Filesystem Hierarchy Standard, plus the OSTree split, which is how Fe
 | `/usr`                       | kernel, sway, drivers, packages. Read-only         | the image ([[monkeyimage]])             | Build, [[machine]] (Updates and rollback) |
 | `/etc`                       | system config: image defaults + local changes      | the image (`files/system/etc`) + local  | [[machine]] (Updates and rollback) (3-way merge) |
 | `/var/lib/flatpak`           | GUI apps, system scope                             | [[monkeyflatpaks]]                      | `default-flatpaks`, at boot |
-| `~/.local/share/containers`  | dev environments (rootless Podman)                 | [[dev-containers]]                      | per project          |
+| `~/.local/share/containers`  | dev environments (rootless Podman)                 | each project's container                | per project          |
 | `~`: dotfiles                | config, user CLI tools                             | each person's repo                      | [[dotfiles]]     |
 | `~`: data                    | projects, documents, media, downloads              | each person, not in git                 | [[you]] (Backup)       |
 | `~/.ssh`, `~/.aws`           | ssh keys, cloud creds                              | the vault, through rbw                  | [[you]] (Secrets)      |
