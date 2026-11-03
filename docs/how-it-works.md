@@ -21,7 +21,7 @@ Basis: the Filesystem Hierarchy Standard, plus the OSTree split, which is how Fe
 | `/etc`                       | system config: image defaults + local changes      | the image (`files/system/etc`) + local  | [[machine]] (Updates and rollback) (3-way merge) |
 | `/var/lib/flatpak`           | GUI apps, system scope                             | [[monkeyflatpaks]]                      | `default-flatpaks`, at boot |
 | `~/.local/share/containers`  | dev environments (rootless Podman)                 | [[dev-containers]]                      | per project          |
-| `~`: dotfiles                | config, user CLI tools                             | each person's repo                      | [[you]] (Dotfiles)     |
+| `~`: dotfiles                | config, user CLI tools                             | each person's repo                      | [[dotfiles]]     |
 | `~`: data                    | projects, documents, media, downloads              | each person, not in git                 | [[you]] (Backup)       |
 | `~/.ssh`, `~/.aws`           | ssh keys, cloud creds                              | the vault, through rbw                  | [[you]] (Secrets)      |
 
@@ -43,7 +43,7 @@ How a program finds its config: it reads the layers in order, and a later layer 
 | ---------------- | ----------- | ------------------------------------ | ---------------------------------------------------------------------------------- |
 | vendor defaults  | `/usr`      | the image: Fedora + [[monkeyimage]]  | `/usr/share/sway/config.d/`, `/usr/lib/systemd/`, `/etc/xdg` (shipped by packages) |
 | system overrides | `/etc`      | the image's `/etc` + per-host config | `/etc/sway/config.d/`, `/etc/keyd/`, `/etc/rpm-ostreed.conf`                       |
-| user overrides   | `~/.config` | each person's dotfiles               | `~/.config/sway/config.d/`, `~/.config/systemd/user/`                              |
+| user overrides   | `~/.config` | each person's [[dotfiles]]           | `~/.config/sway/config.d/`, `~/.config/systemd/user/`                              |
 
 - drop-ins: many programs read a `.d` folder of small files at each layer. A file adds or changes one thing, and leaves the rest of the vendor default in place
 	- Sway on Fedora: `/etc/sway/config` reads `/usr/share/sway/config.d/*.conf`, `/etc/sway/config.d/*.conf`, then `~/.config/sway/config.d/*.conf`. A user file with the same name overrides Fedora's; an empty one disables it
@@ -60,7 +60,7 @@ Basis: the nouns Fedora and bootc use in their own docs. The image's cycle: imag
 | ------------- | ----------------------- | --------------------------------- | ------------------------- | ------------------------------ |
 | **Build**     | `/usr`, `/etc`, apps    | recipe in git → image in ghcr     | BlueBuild                 | Build                     |
 | **Update**    | `/usr`, `/etc`          | image in ghcr → machine           | rpm-ostree timer, stage   | [[machine]] (Updates and rollback) |
-| **Apply**     | `~`: dotfiles           | a person's repo → `~`             | chezmoi                   | [[you]] (Dotfiles)               |
+| **Apply**     | `~`: dotfiles           | a person's repo → `~`             | chezmoi                   | [[dotfiles]]               |
 | **Back up**   | `~`: data               | `~` → S3                          | restic                    | [[you]] (Backup)                 |
 | **Secrets**   | `~/.ssh`, `~/.aws`      | vault → rbw → tools               | rbw + chezmoi templates   | [[you]] (Secrets)                |
 | *sequence*    |                         |                                   |                           |                                |
