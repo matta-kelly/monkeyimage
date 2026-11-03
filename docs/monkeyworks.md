@@ -73,7 +73,7 @@ What the image sets for every user, and the file that changes it for one user. E
 ---
 ## Lifecycle
 
-How each path changes. Basis: the nouns Fedora and bootc use in their own docs. The image's cycle: image → deployment → staged update → reboot → health check → rollback.
+How each path changes. Basis: the nouns Fedora and bootc use in their own docs. The image's cycle: image → deployment → staged update → reboot → rollback, when needed.
 
 | Verb          | Path                    | From → to                         | Engine                    |
 | ------------- | ----------------------- | --------------------------------- | ------------------------- |
@@ -114,7 +114,8 @@ Image in ghcr → machine. Two loops that meet only at the registry: GitHub buil
 - update size: a stage downloads the layers that changed. Fedora chunks the base by package; our own layers are rebuilt every day, about 248 MB even with nothing changed. Rechunking measured worse. Options: [[smaller-image-updates]]
 - `/etc` gets a 3-way merge: the old image's defaults, the new image's defaults, my local changes
 - rollback: the previous deployment is the second entry in the boot menu
-	- greenboot (health checks after boot, rollback by itself when unhealthy) is not in the base ([greenboot](https://github.com/fedora-iot/greenboot))
+	- the menu is hidden while boots succeed. `grub-boot-success.timer` marks a boot good after a couple of minutes logged in; when a boot never gets there, the menu shows on the next boot, so the previous deployment is one pick away
+	- no greenboot: its default checks need the network at boot and reboot the machine by themselves, wrong for a laptop
 - so a change to the recipe reaches every machine with no hands on it, on its next reboot, Jojo's included
 - the dazoo bootc nodes run the apply-and-reboot version of this loop: [[c-devops]]
 
