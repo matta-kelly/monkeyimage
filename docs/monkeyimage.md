@@ -103,6 +103,10 @@ Runs as root for every user, from `sysinit` to `multi-user` (systemd targets: bo
 	- rbw: Bitwarden CLI with an agent that holds the unlocked vault; each user's dotfiles read Vaultwarden through it. Not Bitwarden's own `bw`: Fedora does not package it, and its binary is 143 MB `added`
 	- gh: GitHub CLI; `gh auth login`, and git's credential helper for GitHub `added`
 	- restic: each user's nightly backup ([[backup]]) `added`
+	- pi: an AI agent in the terminal, for every user. Each person's settings and key are in `~/.pi/agent/`, from their dotfiles `added`
+		- not in Fedora: the upstream release binary, from the recipe's `pi` stage, installed in `/usr/lib/pi` with `/usr/bin/pi` linked to it
+		- not pinned: each build takes the latest release and checks it against the release's own `SHA256SUMS`, so the daily build keeps it current. `pi --version` says which one a machine has, and a rollback takes pi back with the image
+		- it cannot update itself: `/usr` is read-only
 	- rescue kit: for a sick machine, with no container or dotfiles needed. Dev tools (strace, perf) go in a toolbox
 		- htop: it's slow `added`
 		- lm_sensors: it's hot `added`

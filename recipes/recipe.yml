@@ -22,6 +22,16 @@ stages:
           - make -C /tmp/keyd
           - make -C /tmp/keyd install PREFIX=/usr DESTDIR=/out FORCE_SYSTEMD=1 # /usr, not /usr/local: /usr/local is machine state on Atomic
 
+  - name: pi # the pi agent: not pinned. Each build takes pi's latest release, so the daily build keeps it current
+    from: fedora:44
+    modules:
+      - type: script
+        snippets:
+          - curl -fsSLo /tmp/pi-linux-x64.tar.gz https://github.com/earendil-works/pi/releases/latest/download/pi-linux-x64.tar.gz
+          - curl -fsSLo /tmp/SHA256SUMS https://github.com/earendil-works/pi/releases/latest/download/SHA256SUMS
+          - cd /tmp && grep ' pi-linux-x64.tar.gz$' SHA256SUMS | sha256sum -c - # checked against the release's own sums: a corrupt download, or a release made between the two downloads, fails the build
+          - mkdir -p /out/usr/lib/pi /out/usr/bin && tar -xzf /tmp/pi-linux-x64.tar.gz -C /out/usr/lib/pi --strip-components=1 && ln -s ../lib/pi/pi /out/usr/bin/pi # one binary and the files it reads beside it
+
 # modules run in order
 modules:
   - type: files
@@ -59,6 +69,11 @@ modules:
 
   - type: copy # keyd's files from the keyd stage
     from: keyd
+    src: /out/
+    dest: /
+
+  - type: copy # pi from the pi stage: /usr/lib/pi, and /usr/bin/pi
+    from: pi
     src: /out/
     dest: /
 
