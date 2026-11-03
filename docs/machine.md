@@ -88,7 +88,7 @@ What runs in the background. System services run as root for the whole machine; 
 - wifi and wired: NetworkManager, with its tray applet in the session
 - firewall: firewalld, zone `public`, as shipped: in only ssh, mdns, dhcpv6
 - the mesh: tailscale, joined once per machine during [[setup]]. The vault is on the mesh
-- VPN: NetworkManager's OpenVPN and OpenConnect plugins. Proton VPN is an app, in my own list
+- VPN: NetworkManager's OpenVPN and OpenConnect plugins. Proton VPN is an app, in one person's own list
 
 ---
 ## Power

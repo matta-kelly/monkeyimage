@@ -10,7 +10,7 @@ The Apps layer of [[monkeyworks]]: every GUI app is a flatpak, and every flatpak
 - Open
 
 - [[monkeyimage]]: its recipe holds the "both" list
-- [[deeotee]]: holds the "just me" list
+- each person's dotfiles: hold their own list
 - the "just Jojo" list: hers; where it lives is open, her own recipe or her dotfiles
 
 ---
@@ -21,7 +21,7 @@ Sorting rule: who uses the app decides the bin, not what the app is.
 | Bin           | Where the list lives | Installed by                                  | Scope            |
 | ------------- | -------------------- | --------------------------------------------- | ---------------- |
 | **Both**      | the [[monkeyimage]] recipe (`recipes/recipe.yml`) | BlueBuild `default-flatpaks`, on every boot   | system: all users |
-| **Just me**   | [[deeotee]]          | chezmoi script: `flatpak install --user`      | my user          |
+| **Just me**   | my dotfiles          | chezmoi script: `flatpak install --user`      | my user          |
 | **Just Jojo** | her setup            | her recipe `FROM` monkeyimage, or her dotfiles | her machine or her user |
 
 - "just me" is not in the image: the same image goes to Jojo, so anything in it is hers too

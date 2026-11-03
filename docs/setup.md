@@ -28,6 +28,5 @@ Two things first: a Vaultwarden account, with a master password only they know, 
 1. log in to the vault: `rbw config set base_url <your Vaultwarden URL>`, `rbw config set email <email>`, `rbw login` (the master password)
 2. `gh auth login`, HTTPS: GitHub, and git's credential helper
 3. `chezmoi init --apply <their dotfiles repo>`: secret files (SSH keys, cloud creds) come from the vault through rbw templates ([[you]], Dotfiles)
-	- the config records the source dir init used. Mine: clone lot, then `chezmoi init --apply --source ~/lot/mkultra/deeotee`
 4. start backup: an S3 bucket and key, and two vault items, with the names in the person's templates: the address and key (`hetzner-s3-<name>`, notes = JSON with `RESTIC_REPOSITORY`, `AWS_DEFAULT_REGION`, `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`), and a long random repository password (`restic-<name>`, notes). Step 3 writes these to `~/.config/restic/`. Then once: `set -a; . ~/.config/restic/env; set +a; restic -p ~/.config/restic/password init`. Then one backup by hand, `systemctl --user start restic-backup`, and one file restored ([[you]], Backup)
 5. `restic restore`, when there is data to bring back: password from the vault ([[backup]])
