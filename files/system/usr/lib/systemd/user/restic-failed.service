@@ -1,0 +1,6 @@
+[Unit]
+Description=Warn that a backup failed
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/notify-send -u critical -i dialog-error "Backup failed" "Your files were not backed up. Run: journalctl --user -u restic-backup"

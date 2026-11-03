@@ -1,5 +1,6 @@
 [Unit]
 Description=Remove old backups: keep 7 daily, 4 weekly, 6 monthly
+OnFailure=restic-failed.service
 ConditionPathExists=/var/mnt/backup/%u/config
 ConditionPathExists=%h/.config/restic/password
 

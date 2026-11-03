@@ -1,5 +1,6 @@
 [Unit]
 Description=Back up ~ to the backup disk
+OnFailure=restic-failed.service
 # Runs only for a user with a repository on the disk and a password file
 ConditionPathExists=/var/mnt/backup/%u/config
 ConditionPathExists=%h/.config/restic/password
