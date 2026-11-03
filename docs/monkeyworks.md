@@ -7,12 +7,12 @@ Monkeyworks: one Fedora Sway Atomic image, the same on every machine, with each 
 - [[how-it-works]]: the model of the whole machine
 	- Where things live: each path, what it holds, who owns it
 		- Files on Atomic: `/usr` read-only, `/etc` merged, `/var` yours
-		- Config layering: vendor, then system, then user, and how drop-ins work
+		- Config layering: vendor, then system, then user; how drop-ins work
 	- How things change: build, update, apply, back up, secrets, setup
 		- Build: how the recipe becomes the image
-- [[machine]]: the computer, shared and the same for everyone
-	- Booting: how the machine comes up, stage by stage
-	- Updates and rollback: how a new image arrives, and how to go back
+- [[machine]]: the computer, the same for everyone
+	- Booting: how the machine starts, stage by stage
+	- Updates and rollback: how a new image arrives, how to go back
 	- Users and login: accounts, the login screen, sudo
 	- Services: what runs in the background, and how to turn one off
 	- Networking: wifi, the firewall, the mesh
@@ -21,23 +21,23 @@ Monkeyworks: one Fedora Sway Atomic image, the same on every machine, with each 
 	- Printing: printers
 	- [[monkeyimage]]: every package and config file in the image
 - [[desktop]]: what you see and use
-	- Sway: the window manager, its keys, and how to add your own
+	- Sway: the window manager, its keys, adding your own
 	- Bar, launcher, notifications: the pieces around the windows
 	- Screens: layouts, the laptop lid, night light
 	- Input: keyboard, remaps, touchpad
 	- Sound: audio and video
 	- Appearance: fonts and themes
-	- Apps: flatpaks, and how to add or remove one
+	- Apps: flatpaks: how to add or remove one
 	- [[monkeyflatpaks]]: the apps, in three bins
 - [[you]]: what is yours alone
 	- Account: who you are on the machine and online
 	- Dotfiles: your config, in your own repo
-	- [[dotfiles]]: what your dotfiles hold, and how you change them
+	- [[dotfiles]]: what your dotfiles hold, how to change them
 	- Secrets: keys and passwords, from your vault
 	- Backup: your files, every night
 	- Shell and terminal: the prompt, aliases, the terminal
-	- [[backup]]: how the backup works, and how to restore
-		- [[restic]]: the tool behind it
+	- [[backup]]: how backup works, how to restore
+		- [[restic]]: the backup tool
 - [[setup]]: from nothing to a working machine
 	- Machine: install, rebase to the image, join the mesh
 	- Each person: vault, GitHub, dotfiles, backup
