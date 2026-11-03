@@ -1,13 +1,19 @@
 [Unit]
-Description=Back up ~ to the backup disk
+Description=Back up ~ to the user's remote repository
 OnFailure=restic-failed.service
-# Runs only for a user with a repository on the disk and a password file
-ConditionPathExists=/var/mnt/backup/%u/config
+# Runs only for a user who has set up a repository: its address and keys, and its password
+ConditionPathExists=%h/.config/restic/env
 ConditionPathExists=%h/.config/restic/password
+# Tries for about half an hour, so a laptop that just woke can reach wifi. Then OnFailure warns
+StartLimitIntervalSec=2h
+StartLimitBurst=6
 
 [Service]
 Type=oneshot
-Environment=RESTIC_REPOSITORY=/var/mnt/backup/%u RESTIC_PASSWORD_FILE=%h/.config/restic/password
+EnvironmentFile=%h/.config/restic/env
+Environment=RESTIC_PASSWORD_FILE=%h/.config/restic/password
 ExecStart=/usr/bin/restic backup --retry-lock 1h --exclude-caches --exclude-file=/etc/restic/excludes %h
+Restart=on-failure
+RestartSec=5min
 Nice=19
 IOSchedulingClass=idle

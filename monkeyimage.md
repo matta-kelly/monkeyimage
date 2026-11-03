@@ -100,7 +100,7 @@ Firmware, bootloader, kernel, initramfs
 	- chezmoi: Bootstrap applies each user's dotfiles with it, so every user (Jojo too) starts from one command `added`
 	- rbw: Bitwarden CLI with an agent that holds the unlocked vault; each user's dotfiles read Vaultwarden through it. Not Bitwarden's own `bw`: Fedora does not package it, and its binary is 143 MB `added`
 	- gh: GitHub CLI; `gh auth login`, and git's credential helper for GitHub `added`
-	- restic: each user's nightly backup ([[local-backup]]) `added`
+	- restic: each user's nightly backup ([[backup]]) `added`
 	- rescue kit: for a sick machine, with no container or dotfiles needed. Dev tools (strace, perf) go in a toolbox
 		- htop: it's slow `added`
 		- lm_sensors: it's hot `added`
@@ -231,10 +231,9 @@ In `/etc`. What the image ships there: config files from `files/system/etc/` in 
 - `battery-warn.timer`: a user unit, enabled for every user by the `systemd` module. In the graphical session, every minute, `/usr/bin/battery-warn` asks UPower and warns once at 20% and once at 10%, through dunst. A user changes the levels with a drop-in in `~/.config/systemd/user/battery-warn.service.d/`, or turns it off with `systemctl --user mask battery-warn.timer`
 - `wlsunset.service`: a user unit, enabled for every user by the `systemd` module. Night light from 20:00 to 07:00 (`WLSUNSET_ARGS`). A user sets a location or other times with a drop-in in `~/.config/systemd/user/wlsunset.service.d/`; a location stays out of the image, which is public
 - `kanshi.service`: Fedora's user unit, enabled for every user by the `systemd` module. The image's drop-in `kanshi.service.d/50-user-config.conf` starts it only when the user has `~/.config/kanshi/config`. The profiles are each user's own; with none, sway places new screens itself
-- `restic-backup.timer`, `restic-prune.timer`: user units, enabled for every user by the `systemd` module. Each night at 02:00 restic backs up `~`, and each Sunday it removes old backups, keeping 7 daily, 4 weekly and 6 monthly. A run missed while the machine was off or asleep happens when it is back. They run only while the user is logged in, and only for a user with a repository at `/var/mnt/backup/<user>` and a password file at `~/.config/restic/password`. A user changes the time with a drop-in in `~/.config/systemd/user/restic-backup.timer.d/` ([[local-backup]])
+- `restic-backup.timer`, `restic-prune.timer`: user units, enabled for every user by the `systemd` module. Each night at 02:00 restic backs up `~`, and each Sunday it removes old backups, keeping 7 daily, 4 weekly and 6 monthly. A run missed while the machine was off or asleep happens when it is back. They run only while the user is logged in, and only for a user with `~/.config/restic/env` (the repository's address and keys) and `~/.config/restic/password`. A failed run tries again for about half an hour, so a laptop that just woke can reach wifi. A user changes the time with a drop-in in `~/.config/systemd/user/restic-backup.timer.d/` ([[backup]])
 - `restic-failed.service`: a user unit. A failed backup or prune starts it, and it warns through dunst
 - `restic/excludes`: what the backup skips in `~`: things a program can make again, or that restic cannot read
-- `var-mnt-backup.mount`: a system unit, enabled by the `systemd` module. It mounts any disk with the label `backup` at `/var/mnt/backup` when the disk appears, so no file names a machine. A machine with no such disk waits for nothing
 - `/etc/keyd/`: empty, from the keyd stage. Keep it: keyd's source exits at startup when the directory is missing. Per-host config goes in it, outside the image ([[per-host-system-config]])
 - `sway/config.d/70-lid.conf`: the laptop panel (`eDP-1`) turns off while the lid is closed, so a docked machine uses only its external screens. Undocked, logind still sleeps on lid close. Fedora's sway config reads `/etc/sway/config.d/`; a user's same-named file in `~/.config/sway/config.d/` overrides it
 

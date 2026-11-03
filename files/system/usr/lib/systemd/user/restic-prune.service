@@ -1,12 +1,19 @@
 [Unit]
 Description=Remove old backups: keep 7 daily, 4 weekly, 6 monthly
 OnFailure=restic-failed.service
-ConditionPathExists=/var/mnt/backup/%u/config
+# Runs only for a user who has set up a repository: its address and keys, and its password
+ConditionPathExists=%h/.config/restic/env
 ConditionPathExists=%h/.config/restic/password
+# Tries for about half an hour, so a laptop that just woke can reach wifi. Then OnFailure warns
+StartLimitIntervalSec=2h
+StartLimitBurst=6
 
 [Service]
 Type=oneshot
-Environment=RESTIC_REPOSITORY=/var/mnt/backup/%u RESTIC_PASSWORD_FILE=%h/.config/restic/password
+EnvironmentFile=%h/.config/restic/env
+Environment=RESTIC_PASSWORD_FILE=%h/.config/restic/password
 ExecStart=/usr/bin/restic forget --retry-lock 1h --prune --keep-daily 7 --keep-weekly 4 --keep-monthly 6
+Restart=on-failure
+RestartSec=5min
 Nice=19
 IOSchedulingClass=idle

@@ -70,13 +70,12 @@ modules:
         - rpm-ostreed-automatic.timer # daily download and stage, with the policy in /etc/rpm-ostreed.conf
         - keyd.service # with no config, keyd matches no keyboard and does nothing
         - tailscaled.service # joins nothing until `tailscale up`
-        - var-mnt-backup.mount # mounts a disk with the label backup, when one appears
     user:
       enabled:
         - battery-warn.timer # every user, in the graphical session: warns at 20% and 10%
         - wlsunset.service # every user, in the graphical session: warm from 20:00 to 07:00
         - kanshi.service # Fedora's unit; runs only for a user with ~/.config/kanshi/config
-        - restic-backup.timer # runs only for a user with a repository and a password file
+        - restic-backup.timer # runs only for a user with ~/.config/restic/env and a password file
         - restic-prune.timer # the same
 
   - type: signing # policy and keys, so machines can check the image is signed
