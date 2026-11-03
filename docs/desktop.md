@@ -3,7 +3,7 @@ type: doc
 description: "The desktop part of Monkeyworks: what you see and use. Sway and its keys, the bar, screens and the lid, night light, input and keyboard remaps, sound, appearance, and apps. Read when changing how the desktop looks or behaves."
 status: active
 ---
-What you see and use: Fedora's Sway desktop, as shipped, with a few shared defaults. Each person changes it for themselves with small files in `~/.config` ([[monkeyworks#Config layering]]).
+What you see and use: Fedora's Sway desktop, as shipped, with a few shared defaults. Each person changes it for themselves with small files in `~/.config` ([[how-it-works#Config layering]]).
 - [[#Sway]] the window manager, its keys, and how to add your own
 - [[#Bar, launcher, notifications]] the pieces around the windows
 - [[#Screens]] layouts, the laptop lid, night light

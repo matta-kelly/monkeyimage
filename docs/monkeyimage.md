@@ -11,7 +11,7 @@ The image of [[monkeyworks]]: `/usr` and `/etc`, built from one recipe, the same
 - [[#Config]] `/etc`, the config files it ships
 - [[#Not in the image]] what goes somewhere else
 
-- [[monkeyworks#Build]]: how the recipe becomes an image (BlueBuild)
+- [[how-it-works#Build]]: how the recipe becomes an image (BlueBuild)
 - [[machine#Updates and rollback]]: how a machine gets the new image
 
 ---
@@ -53,7 +53,7 @@ The image holds what runs at the kernel, system and session stages ([[machine#Bo
 | apps                         | a flatpak ([[monkeyflatpaks]])    |
 | project                      | its dev container                 |
 | a CLI tool only I use        | [[deeotee]] or a distrobox        |
-| config: stable defaults for every user | the image's `/etc` ([[monkeyworks#Config layering]]) |
+| config: stable defaults for every user | the image's `/etc` ([[how-it-works#Config layering]]) |
 | config: identity, or changed often | the user's `~`: [[deeotee]] for me |
 
 - Jojo gets the same image: anything baked in is hers too

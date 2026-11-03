@@ -43,7 +43,7 @@ Coarse stages, deepest first. The deeper a piece sits, the more it belongs in th
 - the split comes from the Linux source tree: `kernel/` (processes), `mm/` (memory), `fs/`, `drivers/`, `net/`, `security/`
 - one column runs through every row. Network: driver (kernel), NetworkManager (system), tray applet (session), Proton VPN (app)
 - three carry the image work
-	- files: on Atomic the filesystem is the design ([[monkeyworks#Files on Atomic]])
+	- files: on Atomic the filesystem is the design ([[how-it-works#Files on Atomic]])
 	- processes: system services vs user services, the stage split
 	- security: root vs the user, and the flatpak sandbox
 
