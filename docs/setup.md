@@ -33,7 +33,7 @@ Two things come first:
 - a Vaultwarden account (the vault), with a master password only they know
 - a dotfiles repo
 
-Then do these steps in order.
+Then do these steps in order. `monke init` walks them: each step checks first, skips what is done, and asks before it changes anything ([[monke]]).
 1. log in to the vault: `rbw config set base_url <your Vaultwarden URL>`, `rbw config set email <email>`, `rbw login` (it asks for the master password)
 2. `gh auth login`, HTTPS: this sets up GitHub, and git's credential helper
 3. `chezmoi init --apply <their dotfiles repo>`: secret files (SSH keys, cloud creds) come from the vault through rbw templates ([[dotfiles]])

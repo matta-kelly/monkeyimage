@@ -69,7 +69,7 @@ Basis: the nouns Fedora and bootc use in their own docs. The image's cycle: imag
 | Verb          | Path                    | From → to                         | Engine                    | Where                              |
 | ------------- | ----------------------- | --------------------------------- | ------------------------- | ---------------------------------- |
 | **Build**     | `/usr`, `/etc`, apps    | recipe in git → image in ghcr     | BlueBuild                 | Build                              |
-| **Update**    | `/usr`, `/etc`          | image in ghcr → machine           | rpm-ostree timer, stage   | [[machine]] (Updates and rollback) |
+| **Update**    | `/usr`, `/etc`          | image in ghcr → machine           | rpm-ostree timer, stage; `monke update` by hand | [[machine]] (Updates and rollback) |
 | **Apply**     | `~`: dotfiles           | a person's repo → `~`             | chezmoi                   | [[dotfiles]]                       |
 | **Back up**   | `~`: data               | `~` → S3                          | restic                    | [[you]] (Backup)                   |
 | **Secrets**   | `~/.ssh`, `~/.aws`      | vault → rbw → tools               | rbw + chezmoi templates   | [[you]] (Secrets)                  |
