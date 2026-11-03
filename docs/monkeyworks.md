@@ -1,20 +1,20 @@
 ---
 type: doc
-description: "My only dev machine (Arch + Sway) and its whole setup, in three cuts from the domain: where things live (filesystem), how they change (lifecycle), when they run (boot sequence). Plus the machines it lands on. The move to Fedora Atomic is [[roll-sway-atomic]]. Reference before changing the machine or deciding where a piece of config lives."
+description: "The front page of Monkeyworks, the Fedora Sway Atomic machine Jojo and I share. Read it first: before changing the machine, or to find where a piece of it lives and which note covers it."
 status: active
 ---
-The machine [[mkultra]] currently lives on, in three cuts from the domain itself: where things live, how they change, when they run.
+Monkeyworks: one Fedora Sway Atomic image, the same on every machine, with each person's own setup on top.
 - [[#Filesystem layout]] where things live: each path, what it holds, who owns it, and how config layers stack
-- [[#Lifecycle]] how each path changes: build, update, apply, protect, secrets, bootstrap
+- [[#Lifecycle]] how things change: build, update, apply, protect, secrets, bootstrap
 - [[#Boot sequence]] when things run: stages as rows, kernel pillars as columns
-- [[#Targets]] the machines this lands on: mine, Jojo's
+- [[#Targets]] the machines it runs on: mine, Jojo's
 - [[#ULSAH outline]] the standard sysadmin reference, as a map of the domain
 
-- [[monkeyimage]]: `/usr` and `/etc`, the image: base and packages
-- [[monkeyflatpaks]]: `/var/lib/flatpak`, the apps: flatpaks in three bins: both, just me, just Jojo
-- [[deeotee]]: `~`, my dotfiles
-- [[dev-containers]]: the dev environments, for Node projects
-- [[backup]]: `~` data, the backup service
+Each part has its own note:
+- [[monkeyimage]]: `/usr` and `/etc`, the image: base, packages, shared config
+- [[monkeyflatpaks]]: `/var/lib/flatpak`, the apps, in three bins: both, just me, just Jojo
+- [[backup]]: `~` data, backed up every night
+- each person's dotfiles: `~`, their own repo. Mine is deeotee, private
 
 ---
 ## Filesystem layout
