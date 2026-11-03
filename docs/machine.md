@@ -63,7 +63,6 @@ Image in ghcr → machine. Two loops that meet only at the registry: GitHub buil
 	- the menu is hidden while boots succeed. `grub-boot-success.timer` marks a boot good after a couple of minutes logged in; when a boot never gets there, the menu shows on the next boot, so the previous deployment is one pick away
 	- no greenboot: its default checks need the network at boot and reboot the machine by themselves, wrong for a laptop
 - so a change to the recipe reaches every machine with no hands on it, on its next reboot, Jojo's included
-- the dazoo bootc nodes run the apply-and-reboot version of this loop: [[c-devops]]
 
 ---
 ## Users and login
