@@ -107,6 +107,12 @@ Runs as root for every user, from `sysinit` to `multi-user` (systemd targets: bo
 		- not in Fedora: the upstream release binary, from the recipe's `pi` stage, installed in `/usr/lib/pi` with `/usr/bin/pi` linked to it
 		- not pinned: each build takes the latest release and checks it against the release's own `SHA256SUMS`, so the daily build keeps it current. `pi --version` says which one a machine has, and a rollback takes pi back with the image
 		- it cannot update itself: `/usr` is read-only
+	- monke: the CLI of the machine (`status`, `update`, `rollback`, `help`, `init`), from its own repo `added`
+		- not pinned: the recipe's `monke` stage takes monke's latest release at each build, checked against its `SHA256SUMS`
+		- it brings `/etc/monke/config`, its prompts in `/usr/share/monke/`, and `monke-model.service`, which is enabled: on the first boot that is online it downloads `help`'s local model (2 GB) to `/var/lib/monke/models/`, then does nothing
+	- llama-server: runs `monke help`'s local model on the CPU, only while a local chat is open `added`
+		- not Fedora's `llama-cpp`: that package pulls the AMD GPU stack, 1.3 GB. llama.cpp's own CPU build is 23 MB, in `/usr/lib/llama.cpp` with `/usr/bin/llama-server` linked to it
+		- pinned in the recipe's `llama-cpp` stage to a build number and its sha256, since llama.cpp releases many times a day. To bump, change both together
 	- rescue kit: for a sick machine, with no container or dotfiles needed. Dev tools (strace, perf) go in a toolbox
 		- htop: it's slow `added`
 		- lm_sensors: it's hot `added`

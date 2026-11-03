@@ -32,6 +32,25 @@ stages:
           - cd /tmp && grep ' pi-linux-x64.tar.gz$' SHA256SUMS | sha256sum -c - # checked against the release's own sums: a corrupt download, or a release made between the two downloads, fails the build
           - mkdir -p /out/usr/lib/pi /out/usr/bin && tar -xzf /tmp/pi-linux-x64.tar.gz -C /out/usr/lib/pi --strip-components=1 && ln -s ../lib/pi/pi /out/usr/bin/pi # one binary and the files it reads beside it
 
+  - name: llama-cpp # llama-server for monke help's local model: llama.cpp's own CPU build. Fedora's package pulls the AMD GPU stack (1.3 GB). Pinned: llama.cpp releases many times a day. Bump: the build number and the sha256 together
+    from: fedora:44
+    modules:
+      - type: script
+        snippets:
+          - curl -fsSLo /tmp/llama.tar.gz https://github.com/ggml-org/llama.cpp/releases/download/b12078/llama-b12078-bin-ubuntu-x64.tar.gz
+          - echo "600059b6d20ece89e19a20c4e9ab8d23c54cc33e9132a692dffbcc10ed226003  /tmp/llama.tar.gz" | sha256sum -c - # a mismatch fails the build
+          - mkdir -p /out/usr/lib/llama.cpp /out/usr/bin && tar -xzf /tmp/llama.tar.gz -C /out/usr/lib/llama.cpp --strip-components=1 && ln -s ../lib/llama.cpp/llama-server /out/usr/bin/llama-server # the binaries find their libraries beside them
+
+  - name: monke # the monke CLI: not pinned. Each build takes monke's latest release, checked against its SHA256SUMS
+    from: fedora:44
+    modules:
+      - type: script
+        snippets:
+          - curl -fsSLo /tmp/monke.tar.gz https://github.com/matta-kelly/monke/releases/latest/download/monke.tar.gz
+          - curl -fsSLo /tmp/SHA256SUMS https://github.com/matta-kelly/monke/releases/latest/download/SHA256SUMS
+          - cd /tmp && grep ' monke.tar.gz$' SHA256SUMS | sha256sum -c -
+          - mkdir -p /out && tar -xzf /tmp/monke.tar.gz -C /out # its files at their paths under /
+
 # modules run in order
 modules:
   - type: files
@@ -77,6 +96,16 @@ modules:
     src: /out/
     dest: /
 
+  - type: copy # llama-server from the llama-cpp stage: /usr/lib/llama.cpp, and /usr/bin/llama-server
+    from: llama-cpp
+    src: /out/
+    dest: /
+
+  - type: copy # monke from the monke stage: /usr/bin/monke, its model download service, prompts and /etc/monke/config
+    from: monke
+    src: /out/
+    dest: /
+
   - type: default-flatpaks # installed at boot, from Flathub
     configurations:
       - scope: system # the "both" list: every user gets these
@@ -89,6 +118,7 @@ modules:
         - rpm-ostreed-automatic.timer # daily download and stage, with the policy in /etc/rpm-ostreed.conf
         - keyd.service # with no config, keyd matches no keyboard and does nothing
         - tailscaled.service # joins nothing until `tailscale up`
+        - monke-model.service # downloads monke help's local model on the first boot that is online, then does nothing
     user:
       enabled:
         - battery-warn.timer # every user, in the graphical session: warns at 20% and 10%
