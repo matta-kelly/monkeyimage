@@ -4,7 +4,7 @@
 name: monkeyimage
 description: My Fedora Sway Atomic image.
 
-# official Fedora Sway Atomic, pinned to a release: monkeyimage.md says why
+# official Fedora Sway Atomic, pinned to a release: docs/monkeyimage.md says why
 base-image: quay.io/fedora-ostree-desktops/sway-atomic
 image-version: 44
 
@@ -29,7 +29,7 @@ modules:
       - source: system
         destination: / # files/system/* goes to / in the image
 
-  - type: dnf # added packages, all from the Fedora repos: monkeyimage.md says why each
+  - type: dnf # added packages, all from the Fedora repos: docs/monkeyimage.md says why each
     install:
       packages:
         # system
@@ -52,6 +52,10 @@ modules:
         - wf-recorder
         - heif-pixbuf-loader
         - ffmpegthumbnailer
+
+  - type: copy # the docs: how this machine works, readable on it
+    src: docs/
+    dest: /usr/share/doc/monkeyworks/
 
   - type: copy # keyd's files from the keyd stage
     from: keyd
