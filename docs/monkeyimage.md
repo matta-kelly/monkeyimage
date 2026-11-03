@@ -14,10 +14,6 @@ The image of [[monkeyworks]]: `/usr` and `/etc`, built from one recipe, the same
 - [[monkeyworks#Build]]: how the recipe becomes an image (BlueBuild)
 - [[monkeyworks#Update]]: how a machine gets the new image
 
-### Desk
-- open questions
-	- nada
-
 ---
 ## Repo
 

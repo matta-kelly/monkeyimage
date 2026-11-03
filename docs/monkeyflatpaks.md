@@ -13,13 +13,6 @@ The Apps layer of [[monkeyworks]]: every GUI app is a flatpak, and every flatpak
 - [[deeotee]]: holds the "just me" list
 - [[jojo-onboard]]: holds the "just Jojo" list
 
-### Desk
-- open questions
-	- does removing an ID from the list uninstall the app? The docs do not say
-	- does a derived image's `default-flatpaks` list add to its parent's, or replace it? The Jojo recipe depends on it
-	- when do user-scope installs run, relative to login?
-	- VS Code as a flatpak is sandboxed ([sandbox permissions](https://docs.flatpak.org/en/latest/sandbox-permissions.html)): [[dev-containers]] needs it to reach the host's Podman. Check, or put VS Code in a distrobox or the image
-	- Proton VPN as a flatpak: does it work with system NetworkManager, or does it belong in the image?
 ---
 ## Bins
 

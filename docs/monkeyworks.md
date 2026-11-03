@@ -15,24 +15,6 @@ The machine [[mkultra]] currently lives on, in three cuts from the domain itself
 - [[deeotee]]: `~`, my dotfiles
 - [[dev-containers]]: the dev environments, for Node projects
 - [[backup]]: `~` data, the backup service
-- [[both-on-monkeyworks]]: the objective, Jojo and me both on it; its projects in order
-
-#### Desk
-- In flight
-	- nada
-- Next
-	- OBJECTIVE: [[both-on-monkeyworks]] Jojo and me both on it, owning it
-		- [[roll-sway-atomic]] the shared base, then [[personal-path]] and [[legibility]], then [[matt-onboard]], [[jojo-onboard]] (her birthday), [[matt-extras]]
-- Inbox
-	- an idea, as it was said
-- open questions
-	- image tags: BlueBuild tags `latest` + a timestamp, not `sha-<short commit>`
-	- media sync: syncthing now or wait for NAS
-	- flatpak updates: the image updates by the rpm-ostree timer, flatpaks by `flatpak update`. What schedules them?
-	- greenboot: add it, so a bad update rolls back by itself, or keep rollback by hand?
-
-
-
 
 ---
 ## Filesystem layout
