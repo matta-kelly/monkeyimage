@@ -21,7 +21,7 @@ The repo: `github.com/matta-kelly/monkeyimage`, public, made from [blue-build/te
 - recipe: `recipes/recipe.yml`; it can split into more files ([from-file](https://blue-build.org/how-to/multiple-files/))
 - files copied into the image: `files/system/` → `/`
 - docs: `docs/`, the notes on how this machine works (this one among them), copied into the image at `/usr/share/doc/monkeyworks/`, so every machine carries the docs that match it. Public, so they name nothing on my network: a value like a server address is a placeholder
-- checks: `just check` runs `scripts/check.sh`: `basis lint` on the notes from this repo's root, then `bluebuild generate recipes/recipe.yml` with the BlueBuild CLI container, pinned by digest. `.github/workflows/checks.yml` runs the same on every push ([[ci]])
+- checks: every change to the image is checked before it's built, so a broken change never reaches a machine. The image is signed, so a machine only takes images that came from this repo
 - CI: `.github/workflows/build.yml` (BlueBuild Action). Builds on every push to any branch that changes a file other than `README.md` (a change to `docs/` rebuilds, since the docs are in the image), on pull requests, and daily at 06:00 UTC for Fedora's base updates
 	- pushes signed images to `ghcr.io/matta-kelly/monkeyimage`, public: `latest`, `<commit>-44`, and `pr-<n>-44` for pull requests (the suffix is the Fedora version)
 	- signing: `cosign.pub` in the repo; the private key is the repo secret `SIGNING_SECRET`, with a copy in Vaultwarden (`monkeyimage-cosign-signing-key`)
