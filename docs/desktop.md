@@ -3,16 +3,16 @@ type: doc
 description: "The desktop part of Monkeyworks: what you see and use. Sway and its keys, the bar, screens and the lid, night light, input and keyboard remaps, sound, appearance, and apps. Read when changing how the desktop looks or behaves."
 status: active
 ---
-What you see and use: Fedora's Sway desktop, as shipped, with a few shared defaults. Each person changes it for themselves with small files in `~/.config` ([[how-it-works#Config layering]]).
-- [[#Sway]] the window manager, its keys, and how to add your own
-- [[#Bar, launcher, notifications]] the pieces around the windows
-- [[#Screens]] layouts, the laptop lid, night light
-- [[#Input]] keyboard, remaps, touchpad
-- [[#Sound]] audio and video
-- [[#Appearance]] fonts and themes
-- [[#Apps]] flatpaks, and how to add or remove one
+What you see and use: Fedora's Sway desktop, as shipped, with a few shared defaults. Each person changes it for themselves with small files in `~/.config` ([[how-it-works]], Config layering).
+- Sway: the window manager, its keys, and how to add your own
+- Bar, launcher, notifications: the pieces around the windows
+- Screens: layouts, the laptop lid, night light
+- Input: keyboard, remaps, touchpad
+- Sound: audio and video
+- Appearance: fonts and themes
+- Apps: flatpaks, and how to add or remove one
 
-- [[monkeyimage#Session]]: every desktop package in the image
+- [[monkeyimage]] (Session): every desktop package in the image
 - [[monkeyworks]]: the front page
 
 ---
@@ -38,7 +38,7 @@ What you see and use: Fedora's Sway desktop, as shipped, with a few shared defau
 ## Input
 
 - keyboard layout and touchpad: sway's `input` settings, in a drop-in
-- key remaps (chord to chord, F-keys to media keys): keyd. It reads only `/etc/keyd/`, so a person's dotfiles carry the file and a `sudo` script installs it ([[per-host-system-config]])
+- key remaps (chord to chord, F-keys to media keys): keyd. It reads only `/etc/keyd/`, so a person's dotfiles carry the file and a `sudo` script installs it
 
 ## Sound
 
@@ -54,4 +54,4 @@ What you see and use: Fedora's Sway desktop, as shipped, with a few shared defau
 
 GUI apps are flatpaks, sorted into three bins: both of us, just me, just Jojo. [[monkeyflatpaks]] has the bins, the apps, and how each bin is installed.
 - the "both" list installs at the first boot, from the image's recipe
-- apps update separately from the image ([[machine#Updates and rollback]])
+- apps update separately from the image ([[machine]], Updates and rollback)

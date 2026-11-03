@@ -42,4 +42,4 @@ Monkeyworks: one Fedora Sway Atomic image, the same on every machine, with each 
 	- Each person: vault, GitHub, dotfiles, backup
 - Machines
 	- mine: monkeyworks (ThinkPad)
-	- Jojo's: the same image and app lists, with what only she gets in [[jojo-onboard]]
+	- Jojo's: the same image and app lists, plus her own apps and keyboard

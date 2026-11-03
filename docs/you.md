@@ -4,11 +4,11 @@ description: "The personal part of Monkeyworks: what belongs to one person and n
 status: active
 ---
 What is yours alone: your account and everything in `~`. You can change any of it, and nothing here reaches anyone else.
-- [[#Account]] who you are on the machine and online
-- [[#Dotfiles]] your config, in your own repo
-- [[#Secrets]] keys and passwords, from your vault
-- [[#Backup]] your files, every night
-- [[#Shell and terminal]] the prompt, aliases, the terminal
+- Account: who you are on the machine and online
+- Dotfiles: your config, in your own repo
+- Secrets: keys and passwords, from your vault
+- Backup: your files, every night
+- Shell and terminal: the prompt, aliases, the terminal
 
 - [[setup]]: how a new person gets all of this
 - [[monkeyworks]]: the front page
@@ -27,8 +27,8 @@ Each person brings their own identity; the image bakes none of it.
 Your config, in your own repo, applied with chezmoi. Mine is deeotee.
 - `chezmoi apply`: your repo to `~`. `chezmoi re-add`: edits made in `~` back to the repo
 - `chezmoi diff` before an apply shows what would change
-- add to the shared defaults with drop-ins; replace a whole file only for a named reason ([[how-it-works#Config layering]])
-- system files (`/etc`) a person needs, such as a keyboard remap: the dotfiles carry them, and a `sudo` script installs them ([[per-host-system-config]])
+- add to the shared defaults with drop-ins; replace a whole file only for a named reason ([[how-it-works]], Config layering)
+- system files (`/etc`) a person needs, such as a keyboard remap: the dotfiles carry them, and a `sudo` script installs them
 
 ## Secrets
 

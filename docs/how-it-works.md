@@ -4,8 +4,8 @@ description: "How Monkeyworks works as a whole: where each thing lives and who o
 status: active
 ---
 The model of the whole machine, which every part follows.
-- [[#Where things live]] each path, what it holds, who owns it, how it changes
-- [[#How things change]] the verbs: build, update, apply, back up, secrets, setup
+- Where things live: each path, what it holds, who owns it, how it changes
+- How things change: the verbs: build, update, apply, back up, secrets, setup
 
 - [[monkeyworks]]: the map of every note
 
@@ -13,17 +13,17 @@ The model of the whole machine, which every part follows.
 ## Where things live
 Basis: the Filesystem Hierarchy Standard, plus the OSTree split, which is how Fedora documents Atomic. Each path has one owner and one way it changes.
 - sorting rule: the machine goes in the image, a person goes in their dotfiles, a project goes in its container
-- the rule, by boot stage: [[monkeyimage#What gets baked]]
+- the rule, by boot stage: [[monkeyimage]] (What gets baked)
 
 | Path                         | Holds                                              | Owner                                   | Changes by           |
 | ---------------------------- | -------------------------------------------------- | --------------------------------------- | -------------------- |
-| `/usr`                       | kernel, sway, drivers, packages. Read-only         | the image ([[monkeyimage]])             | [[#Build]], [[machine#Updates and rollback]] |
-| `/etc`                       | system config: image defaults + local changes      | the image (`files/system/etc`) + local  | [[machine#Updates and rollback]] (3-way merge) |
+| `/usr`                       | kernel, sway, drivers, packages. Read-only         | the image ([[monkeyimage]])             | Build, [[machine]] (Updates and rollback) |
+| `/etc`                       | system config: image defaults + local changes      | the image (`files/system/etc`) + local  | [[machine]] (Updates and rollback) (3-way merge) |
 | `/var/lib/flatpak`           | GUI apps, system scope                             | [[monkeyflatpaks]]                      | `default-flatpaks`, at boot |
 | `~/.local/share/containers`  | dev environments (rootless Podman)                 | [[dev-containers]]                      | per project          |
-| `~`: dotfiles                | config, user CLI tools                             | each person's repo                      | [[you#Dotfiles]]     |
-| `~`: data                    | projects, documents, media, downloads              | each person, not in git                 | [[you#Backup]]       |
-| `~/.ssh`, `~/.aws`           | ssh keys, cloud creds                              | the vault, through rbw                  | [[you#Secrets]]      |
+| `~`: dotfiles                | config, user CLI tools                             | each person's repo                      | [[you]] (Dotfiles)     |
+| `~`: data                    | projects, documents, media, downloads              | each person, not in git                 | [[you]] (Backup)       |
+| `~/.ssh`, `~/.aws`           | ssh keys, cloud creds                              | the vault, through rbw                  | [[you]] (Secrets)      |
 
 - not on disk: each person's vault master password, the tailnet identity
 
@@ -58,11 +58,11 @@ Basis: the nouns Fedora and bootc use in their own docs. The image's cycle: imag
 
 | Verb          | Path                    | From → to                         | Engine                    | Where                          |
 | ------------- | ----------------------- | --------------------------------- | ------------------------- | ------------------------------ |
-| **Build**     | `/usr`, `/etc`, apps    | recipe in git → image in ghcr     | BlueBuild                 | [[#Build]]                     |
-| **Update**    | `/usr`, `/etc`          | image in ghcr → machine           | rpm-ostree timer, stage   | [[machine#Updates and rollback]] |
-| **Apply**     | `~`: dotfiles           | a person's repo → `~`             | chezmoi                   | [[you#Dotfiles]]               |
-| **Back up**   | `~`: data               | `~` → S3                          | restic                    | [[you#Backup]]                 |
-| **Secrets**   | `~/.ssh`, `~/.aws`      | vault → rbw → tools               | rbw + chezmoi templates   | [[you#Secrets]]                |
+| **Build**     | `/usr`, `/etc`, apps    | recipe in git → image in ghcr     | BlueBuild                 | Build                     |
+| **Update**    | `/usr`, `/etc`          | image in ghcr → machine           | rpm-ostree timer, stage   | [[machine]] (Updates and rollback) |
+| **Apply**     | `~`: dotfiles           | a person's repo → `~`             | chezmoi                   | [[you]] (Dotfiles)               |
+| **Back up**   | `~`: data               | `~` → S3                          | restic                    | [[you]] (Backup)                 |
+| **Secrets**   | `~/.ssh`, `~/.aws`      | vault → rbw → tools               | rbw + chezmoi templates   | [[you]] (Secrets)                |
 | *sequence*    |                         |                                   |                           |                                |
 | **Setup**     | all                     | nothing → whole machine           | the verbs above, in order | [[setup]]                      |
 

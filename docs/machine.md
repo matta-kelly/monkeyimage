@@ -4,14 +4,14 @@ description: "The computer part of Monkeyworks: what is the same for everyone an
 status: active
 ---
 The computer: shared, the same for everyone, set by the image. A change here is a change to the image, so it reaches every machine.
-- [[#Booting]] how the machine comes up, stage by stage
-- [[#Updates and rollback]] how a new image arrives, and how to go back
-- [[#Users and login]] accounts, the login screen, sudo
-- [[#Services]] what runs in the background, and how to turn one off
-- [[#Networking]] wifi, the firewall, the mesh
-- [[#Power]] battery, suspend, power profiles
-- [[#Storage]] disks and their health
-- [[#Printing]] printers
+- Booting: how the machine comes up, stage by stage
+- Updates and rollback: how a new image arrives, and how to go back
+- Users and login: accounts, the login screen, sudo
+- Services: what runs in the background, and how to turn one off
+- Networking: wifi, the firewall, the mesh
+- Power: battery, suspend, power profiles
+- Storage: disks and their health
+- Printing: printers
 
 - [[monkeyimage]]: every package and config file the image holds
 - [[monkeyworks]]: the front page
@@ -43,7 +43,7 @@ Coarse stages, deepest first. The deeper a piece sits, the more it belongs in th
 - the split comes from the Linux source tree: `kernel/` (processes), `mm/` (memory), `fs/`, `drivers/`, `net/`, `security/`
 - one column runs through every row. Network: driver (kernel), NetworkManager (system), tray applet (session), Proton VPN (app)
 - three carry the image work
-	- files: on Atomic the filesystem is the design ([[how-it-works#Files on Atomic]])
+	- files: on Atomic the filesystem is the design ([[how-it-works]], Files on Atomic)
 	- processes: system services vs user services, the stage split
 	- security: root vs the user, and the flatpak sandbox
 
@@ -53,11 +53,11 @@ Coarse stages, deepest first. The deeper a piece sits, the more it belongs in th
 Image in ghcr → machine. Two loops that meet only at the registry: GitHub builds, the machine pulls; nothing pushes to it.
 - build side: GitHub builds `latest` on every push to main and daily at 06:00 UTC, so Fedora's base fixes are baked in even when the recipe is unchanged
 - machine side: `rpm-ostreed-automatic.timer` with `AutomaticUpdatePolicy=stage`. Once a day it downloads the changed layers and stages the new image as a second deployment; it takes over at the next reboot, whenever the user chooses ([rpm-ostree](https://coreos.github.io/rpm-ostree/), [bootc](https://bootc-dev.github.io/bootc/), [Fedora bootc](https://docs.fedoraproject.org/en-US/bootc/))
-	- the base ships both update timers disabled and no policy. The image turns this one on and sets the policy ([[monkeyimage#Config]])
+	- the base ships both update timers disabled and no policy. The image turns this one on and sets the policy ([[monkeyimage]], Config)
 	- not `bootc-fetch-apply-updates.timer`: it applies and reboots by itself every 8 hours. Right for a server, wrong for a laptop in use
 	- by hand: `rpm-ostree upgrade`, then reboot. `rpm-ostree rollback` goes back one deployment
-- apps update separately, and nothing updates them yet: `flatpak update` by hand ([[jojo-onboard]] holds the open question)
-- update size: a stage downloads the layers that changed. Fedora chunks the base by package; our own layers are rebuilt every day, about 248 MB even with nothing changed. Rechunking measured worse. Options: [[smaller-image-updates]]
+- apps update separately, and nothing updates them yet: `flatpak update` by hand
+- update size: a stage downloads the layers that changed. Fedora chunks the base by package; our own layers are rebuilt every day, about 248 MB even with nothing changed. Rechunking measured worse
 - `/etc` gets a 3-way merge: the old image's defaults, the new image's defaults, local changes
 - rollback: the previous deployment is the second entry in the boot menu
 	- the menu is hidden while boots succeed. `grub-boot-success.timer` marks a boot good after a couple of minutes logged in; when a boot never gets there, the menu shows on the next boot, so the previous deployment is one pick away
@@ -68,7 +68,7 @@ Image in ghcr → machine. Two loops that meet only at the registry: GitHub buil
 ---
 ## Users and login
 
-- login screen: SDDM, as Fedora ships it. How it should look and behave is open: [[login-screen]]
+- login screen: SDDM, as Fedora ships it
 - accounts: one per person. Each person's setup comes through [[setup]]
 - sudo and login with a YubiKey: `pam-u2f` and `pamu2fcfg` are in the image; each key is set up in PAM per machine
 - fingerprint login: `fprintd`, from the base
@@ -79,7 +79,7 @@ Image in ghcr → machine. Two loops that meet only at the registry: GitHub buil
 What runs in the background. System services run as root for the whole machine; user services run in each person's session.
 - system, enabled by the image: `rpm-ostreed-automatic.timer` (updates), `keyd.service` (key remaps), `tailscaled.service` (the mesh)
 - user, enabled for everyone by the image: `battery-warn.timer`, `wlsunset.service` (night light), `kanshi.service` (screen layouts), `restic-backup.timer` and `restic-prune.timer` (backup)
-- what each does and how to change it: [[monkeyimage#Config]]
+- what each does and how to change it: [[monkeyimage]] (Config)
 - turn a user service off for one person: `systemctl --user mask <unit>`. After a drop-in change: `systemctl --user daemon-reload`, then restart the unit
 
 ---
@@ -88,7 +88,7 @@ What runs in the background. System services run as root for the whole machine; 
 - wifi and wired: NetworkManager, with its tray applet in the session
 - firewall: firewalld, zone `public`, as shipped: in only ssh, mdns, dhcpv6
 - the mesh: tailscale, joined once per machine during [[setup]]. The vault is on the mesh
-- VPN: NetworkManager's OpenVPN and OpenConnect plugins. Proton VPN is an app for me only: [[matt-extras]]
+- VPN: NetworkManager's OpenVPN and OpenConnect plugins. Proton VPN is an app, in my own list
 
 ---
 ## Power
@@ -104,7 +104,7 @@ What runs in the background. System services run as root for the whole machine; 
 - disks: udisks2 mounts removable drives; `fstrim.timer` trims SSDs
 - disk health: `smartctl` (smartmontools)
 - a full disk: `ncdu`
-- your files are backed up every night: [[you#Backup]]
+- your files are backed up every night: [[you]] (Backup)
 
 ---
 ## Printing

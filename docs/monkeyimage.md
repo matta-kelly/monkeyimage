@@ -4,15 +4,15 @@ description: "The image of Monkeyworks: what owns `/usr` and `/etc`. The base it
 status: planned
 ---
 The image of [[monkeyworks]]: `/usr` and `/etc`, built from one recipe, the same on every machine.
-- [[#Repo]] where the recipe lives
-- [[#Base]] what it builds on, and why
-- [[#What gets baked]] the rule, by boot stage
-- [[#Packages]] `/usr`, what it holds: by stage, then by job, each tagged by where it comes from
-- [[#Config]] `/etc`, the config files it ships
-- [[#Not in the image]] what goes somewhere else
+- Repo: where the recipe lives
+- Base: what it builds on, and why
+- What gets baked: the rule, by boot stage
+- Packages: `/usr`, what it holds: by stage, then by job, each tagged by where it comes from
+- Config: `/etc`, the config files it ships
+- Not in the image: what goes somewhere else
 
-- [[how-it-works#Build]]: how the recipe becomes an image (BlueBuild)
-- [[machine#Updates and rollback]]: how a machine gets the new image
+- [[how-it-works]] (Build): how the recipe becomes an image (BlueBuild)
+- [[machine]] (Updates and rollback): how a machine gets the new image
 
 ---
 ## Repo
@@ -25,7 +25,7 @@ The repo: `github.com/matta-kelly/monkeyimage`, public, made from [blue-build/te
 - CI: `.github/workflows/build.yml` (BlueBuild Action). Builds on every push to any branch that changes a file other than `README.md` (a change to `docs/` rebuilds, since the docs are in the image), on pull requests, and daily at 06:00 UTC for Fedora's base updates
 	- pushes signed images to `ghcr.io/matta-kelly/monkeyimage`, public: `latest`, `<commit>-44`, and `pr-<n>-44` for pull requests (the suffix is the Fedora version)
 	- signing: `cosign.pub` in the repo; the private key is the repo secret `SIGNING_SECRET`, with a copy in Vaultwarden (`monkeyimage-cosign-signing-key`)
-	- update size: not rechunked. A rebuild with nothing changed still costs each machine about 248 MB. Rechunking measured worse (457 MB). Options and measurements: [[smaller-image-updates]]
+	- update size: not rechunked. A rebuild with nothing changed still costs each machine about 248 MB. Rechunking measured worse (457 MB)
 - an offline install ISO can be made from the image ([generate ISO](https://blue-build.org/how-to/generate-iso/))
 - public, so nothing goes in that names my network or is personal: that goes in [[deeotee]] or the Jojo layer
 
@@ -45,7 +45,7 @@ The repo: `github.com/matta-kelly/monkeyimage`, public, made from [blue-build/te
 
 ## What gets baked
 
-The image holds what runs at the kernel, system and session stages ([[machine#Booting]]).
+The image holds what runs at the kernel, system and session stages ([[machine]], Booting).
 
 | Stage / kind                 | Goes in                           |
 | ---------------------------- | --------------------------------- |
@@ -53,7 +53,7 @@ The image holds what runs at the kernel, system and session stages ([[machine#Bo
 | apps                         | a flatpak ([[monkeyflatpaks]])    |
 | project                      | its dev container                 |
 | a CLI tool only I use        | [[deeotee]] or a distrobox        |
-| config: stable defaults for every user | the image's `/etc` ([[how-it-works#Config layering]]) |
+| config: stable defaults for every user | the image's `/etc` ([[how-it-works]], Config layering) |
 | config: identity, or changed often | the user's `~`: [[deeotee]] for me |
 
 - Jojo gets the same image: anything baked in is hers too
@@ -174,9 +174,9 @@ Firmware, bootloader, kernel, initramfs
 	- notifications
 		- dunst `base`. Also the volume and brightness popup: progress-bar notifications, no OSD package
 	- outputs
-		- kanshi `base`. Started by Fedora's `kanshi.service` for a user with profiles ([[#Config]])
+		- kanshi `base`. Started by Fedora's `kanshi.service` for a user with profiles (Config)
 	- night light
-		- wlsunset `base`. Started by the image's `wlsunset.service` ([[#Config]])
+		- wlsunset `base`. Started by the image's `wlsunset.service` (Config)
 	- screenshots and recording
 		- grim `base`
 		- slurp `base`
@@ -222,7 +222,7 @@ Firmware, bootloader, kernel, initramfs
 ## Config
 
 In `/etc`. What the image ships there: config files from `files/system/etc/` in the repo, the unit links the recipe's `systemd` module makes, and what a build stage installs.
-- `rpm-ostreed.conf`: `AutomaticUpdatePolicy=stage`. An update downloads and stages the new image; it takes over at the next reboot ([[machine#Updates and rollback]])
+- `rpm-ostreed.conf`: `AutomaticUpdatePolicy=stage`. An update downloads and stages the new image; it takes over at the next reboot ([[machine]], Updates and rollback)
 - `rpm-ostreed-automatic.timer`: a unit link, enabled by the `systemd` module. It runs the policy once a day
 - `keyd.service`: a unit link, enabled by the `systemd` module
 - `battery-warn.timer`: a user unit, enabled for every user by the `systemd` module. In the graphical session, every minute, `/usr/bin/battery-warn` asks UPower and warns once at 20% and once at 10%, through dunst. A user changes the levels with a drop-in in `~/.config/systemd/user/battery-warn.service.d/`, or turns it off with `systemctl --user mask battery-warn.timer`
@@ -231,7 +231,7 @@ In `/etc`. What the image ships there: config files from `files/system/etc/` in 
 - `restic-backup.timer`, `restic-prune.timer`: user units, enabled for every user by the `systemd` module. Each night at 02:00 restic backs up `~`, and each Sunday it removes old backups, keeping 7 daily, 4 weekly and 6 monthly. A run missed while the machine was off or asleep happens when it is back. They run only while the user is logged in, and only for a user with `~/.config/restic/env` (the repository's address and keys) and `~/.config/restic/password`. A failed run tries again for about half an hour, so a laptop that just woke can reach wifi. A user changes the time with a drop-in in `~/.config/systemd/user/restic-backup.timer.d/` ([[backup]])
 - `restic-failed.service`: a user unit. A failed backup or prune starts it, and it warns through dunst
 - `restic/excludes`: what the backup skips in `~`: things a program can make again, or that restic cannot read
-- `/etc/keyd/`: empty, from the keyd stage. Keep it: keyd's source exits at startup when the directory is missing. Per-host config goes in it, outside the image ([[per-host-system-config]])
+- `/etc/keyd/`: empty, from the keyd stage. Keep it: keyd's source exits at startup when the directory is missing. Per-host config goes in it, outside the image: the owner's dotfiles carry the file, and a `sudo` script installs it
 - `sway/config.d/70-lid.conf`: the laptop panel (`eDP-1`) turns off while the lid is closed, so a docked machine uses only its external screens. Undocked, logind still sleeps on lid close. Fedora's sway config reads `/etc/sway/config.d/`; a user's same-named file in `~/.config/sway/config.d/` overrides it
 
 ## Not in the image

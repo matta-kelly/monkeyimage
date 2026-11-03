@@ -4,10 +4,10 @@ description: Encrypted, deduplicated backup CLI; reference to understand how res
 status: running
 ---
 Backs up folders into an encrypted repository as snapshots.
-- [[#How it works]] repository, snapshots, dedup, encryption
-- [[#Commands]] the pieces you use
-- [[#Retention]] how `forget` decides what to keep
-- [[#Best practices]]
+- How it works: repository, snapshots, dedup, encryption
+- Commands: the pieces you use
+- Retention: how `forget` decides what to keep
+- Best practices
 
 - used by [[backup]]
 - docs: https://restic.readthedocs.io
