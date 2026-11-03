@@ -1,0 +1,11 @@
+[Unit]
+Description=Remove old backups: keep 7 daily, 4 weekly, 6 monthly
+ConditionPathExists=/var/mnt/backup/%u/config
+ConditionPathExists=%h/.config/restic/password
+
+[Service]
+Type=oneshot
+Environment=RESTIC_REPOSITORY=/var/mnt/backup/%u RESTIC_PASSWORD_FILE=%h/.config/restic/password
+ExecStart=/usr/bin/restic forget --retry-lock 1h --prune --keep-daily 7 --keep-weekly 4 --keep-monthly 6
+Nice=19
+IOSchedulingClass=idle

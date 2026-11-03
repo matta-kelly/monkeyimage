@@ -1,0 +1,12 @@
+[Unit]
+Description=Back up ~ to the backup disk
+# Runs only for a user with a repository on the disk and a password file
+ConditionPathExists=/var/mnt/backup/%u/config
+ConditionPathExists=%h/.config/restic/password
+
+[Service]
+Type=oneshot
+Environment=RESTIC_REPOSITORY=/var/mnt/backup/%u RESTIC_PASSWORD_FILE=%h/.config/restic/password
+ExecStart=/usr/bin/restic backup --retry-lock 1h --exclude-caches --exclude-file=/etc/restic/excludes %h
+Nice=19
+IOSchedulingClass=idle

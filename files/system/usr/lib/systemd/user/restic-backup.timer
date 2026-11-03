@@ -1,0 +1,11 @@
+[Unit]
+Description=Back up ~ every night
+
+[Timer]
+# Override in ~/.config/systemd/user/restic-backup.timer.d/*.conf
+OnCalendar=*-*-* 02:00
+# A run missed while the machine was off or asleep happens when it is back
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,8 @@
+# What restic-backup.service skips in ~. Things a program can make again, or that restic cannot read.
+.cache
+.local/share/Trash
+.local/share/containers
+.var/app/*/cache
+node_modules
+__pycache__
+.venv
