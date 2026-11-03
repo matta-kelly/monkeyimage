@@ -12,7 +12,7 @@ The image of [[monkeyworks]]: `/usr` and `/etc`, built from one recipe, the same
 - [[#Not in the image]] what goes somewhere else
 
 - [[monkeyworks#Build]]: how the recipe becomes an image (BlueBuild)
-- [[monkeyworks#Update]]: how a machine gets the new image
+- [[machine#Updates and rollback]]: how a machine gets the new image
 
 ---
 ## Repo
@@ -45,7 +45,7 @@ The repo: `github.com/matta-kelly/monkeyimage`, public, made from [blue-build/te
 
 ## What gets baked
 
-The image holds what runs at the kernel, system and session stages ([[monkeyworks#Boot sequence]]).
+The image holds what runs at the kernel, system and session stages ([[machine#Booting]]).
 
 | Stage / kind                 | Goes in                           |
 | ---------------------------- | --------------------------------- |
@@ -62,7 +62,7 @@ The image holds what runs at the kernel, system and session stages ([[monkeywork
 
 ## Packages
 
-In `/usr`. Rows: boot stage. Buckets: the [Arch General recommendations](https://wiki.archlinux.org/title/General_recommendations) sections, plus [[monkeyworks#ULSAH outline]] where Arch has none (storage, virtualization). Only packages that are a decision or that I touch; the rest of the 1423 are libraries and support (`rpm -qa` in the base image).
+In `/usr`. Rows: boot stage. Buckets: the [Arch General recommendations](https://wiki.archlinux.org/title/General_recommendations) sections, plus the *UNIX and Linux System Administration Handbook*'s sections where Arch has none (storage, virtualization). Only packages that are a decision or that I touch; the rest of the 1423 are libraries and support (`rpm -qa` in the base image).
 
 Tags: `base` in the base image, `added` by the recipe.
 
@@ -123,7 +123,7 @@ Firmware, bootloader, kernel, initramfs
 	- avahi: local discovery `base`
 	- openvpn `base`
 	- wireguard-tools `base`
-	- tailscale: `tailscaled.service` enabled; a machine joins the mesh with `tailscale up` ([[monkeyworks#Bootstrap]]) `added`
+	- tailscale: `tailscaled.service` enabled; a machine joins the mesh with `tailscale up` ([[setup]]) `added`
 - power management
 	- tuned + tuned-ppd: power profiles `base`
 	- thermald `base`
@@ -222,7 +222,7 @@ Firmware, bootloader, kernel, initramfs
 ## Config
 
 In `/etc`. What the image ships there: config files from `files/system/etc/` in the repo, the unit links the recipe's `systemd` module makes, and what a build stage installs.
-- `rpm-ostreed.conf`: `AutomaticUpdatePolicy=stage`. An update downloads and stages the new image; it takes over at the next reboot ([[monkeyworks#Update]])
+- `rpm-ostreed.conf`: `AutomaticUpdatePolicy=stage`. An update downloads and stages the new image; it takes over at the next reboot ([[machine#Updates and rollback]])
 - `rpm-ostreed-automatic.timer`: a unit link, enabled by the `systemd` module. It runs the policy once a day
 - `keyd.service`: a unit link, enabled by the `systemd` module
 - `battery-warn.timer`: a user unit, enabled for every user by the `systemd` module. In the graphical session, every minute, `/usr/bin/battery-warn` asks UPower and warns once at 20% and once at 10%, through dunst. A user changes the levels with a drop-in in `~/.config/systemd/user/battery-warn.service.d/`, or turns it off with `systemctl --user mask battery-warn.timer`
