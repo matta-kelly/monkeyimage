@@ -63,7 +63,7 @@ GitHub builds `latest` on every push to main and daily at 06:00 UTC, so Fedora's
 `rpm-ostreed-automatic.timer` with `AutomaticUpdatePolicy=stage`. Once a day it downloads the changed layers and stages the new image as a second deployment. The new image takes over at the next reboot, whenever the user chooses. Docs: [rpm-ostree](https://coreos.github.io/rpm-ostree/), [bootc](https://bootc-dev.github.io/bootc/), [Fedora bootc](https://docs.fedoraproject.org/en-US/bootc/).
 - the base ships both update timers disabled and no policy. The image turns this one on and sets the policy ([[monkeyimage]], Config)
 - not `bootc-fetch-apply-updates.timer`: it applies and reboots by itself every 8 hours. Right for a server, wrong for a laptop in use
-- by hand: `monke update` runs `rpm-ostree upgrade`, then `flatpak update`; reboot to use the new image. `monke status` shows the booted, staged and rollback images ([[monke]])
+- by hand: `monke update` asks what to update: everything, the system (`rpm-ostree upgrade`), the apps (`flatpak update`) or your settings (`chezmoi update`); reboot to use a new image. `monke status` shows the booted, staged and rollback images ([[monke]])
 - apps update separately from the image, and no timer updates them yet: `monke update` does them with the system
 - `/etc` gets a 3-way merge of three things: the old image's defaults, the new image's defaults, local changes
 
