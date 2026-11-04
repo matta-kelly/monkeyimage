@@ -69,6 +69,7 @@ modules:
         - restic # each user's nightly backup
         - htop # rescue kit: slow, hot, full
         - fastfetch # what this machine is, at a glance
+        - nodejs-npm # pi installs its extension packages with npm
         - lm_sensors
         - ncdu
         - tailscale

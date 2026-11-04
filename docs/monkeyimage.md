@@ -107,6 +107,7 @@ Runs as root for every user, from `sysinit` to `multi-user` (systemd targets: bo
 		- not in Fedora: the upstream release binary, from the recipe's `pi` stage, installed in `/usr/lib/pi` with `/usr/bin/pi` linked to it
 		- not pinned: each build takes the latest release and checks it against the release's own `SHA256SUMS`, so the daily build keeps it current. `pi --version` says which one a machine has, and a rollback takes pi back with the image
 		- it cannot update itself: `/usr` is read-only
+		- its extension packages (`pi install npm:...`, or `packages` in a person's `~/.pi/agent/settings.json`) install with npm, so the image carries `nodejs-npm` `added`
 	- monke: the CLI of the machine (`status`, `update`, `rollback`, `help`, `init`), from its own repo `added`
 		- not pinned: the recipe's `monke` stage takes monke's latest release at each build, checked against its `SHA256SUMS`
 		- it brings `/etc/monke/config`, its prompts in `/usr/share/monke/`, and `monke-model.service`, which is enabled: on the first boot that is online it downloads `help`'s local model (2 GB) to `/var/lib/monke/models/`, then does nothing
