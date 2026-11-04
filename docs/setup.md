@@ -29,17 +29,22 @@ Do these steps in order.
 
 ## Each person
 
-Two things come first:
+Three things come first:
 - a Vaultwarden account (the vault), with a master password only they know
 - a dotfiles repo
+- every vault item their dotfiles templates read, made before step 3. chezmoi stops at the first template whose item is missing or has the wrong shape, and writes nothing after it
+	- each item is a Secure Note, with its value in the notes
+	- an item whose template reads JSON needs JSON, even while testing: placeholder values work, plain text does not
+	- after changing an item in the web vault: `rbw sync`, then `chezmoi apply`. rbw keeps a local copy, and the files change only on an apply
 
 Then do these steps in order. `monke init` walks them: each step checks first, skips what is done, and asks before it changes anything ([[monke]]).
 1. log in to the vault: `rbw config set base_url <your Vaultwarden URL>`, `rbw config set email <email>`, `rbw login` (it asks for the master password)
-2. `gh auth login`, HTTPS: this sets up GitHub, and git's credential helper
-3. `chezmoi init --apply <their dotfiles repo>`: secret files (SSH keys, cloud creds) come from the vault through rbw templates ([[dotfiles]])
+	- the email is exactly the one the account was made with. A different one fails as a wrong password
+2. `gh auth login`, HTTPS: this sets up GitHub, and git's credential helper. Skip it for a person who will not push to GitHub
+3. `chezmoi init --apply <their dotfiles repo>`: secret files (SSH keys, cloud creds) come from the vault through rbw templates ([[dotfiles]], Getting them onto a machine)
 4. start backup. It needs an S3 bucket and key, and two vault items, named as the person's templates expect
-	- the address and key: `hetzner-s3-<name>`, with notes = JSON holding `RESTIC_REPOSITORY`, `AWS_DEFAULT_REGION`, `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
-	- a long random repository password: `restic-<name>`, in the notes
+	- the address and key: notes = JSON in exactly this shape: `{"RESTIC_REPOSITORY":"s3:https://<endpoint>/<bucket>/restic","AWS_DEFAULT_REGION":"<region>","AWS_ACCESS_KEY_ID":"<key>","AWS_SECRET_ACCESS_KEY":"<secret>"}`
+	- a long random repository password, and nothing else, in the notes
 	- step 3 writes these to `~/.config/restic/`
 	- then, once: `set -a; . ~/.config/restic/env; set +a; restic -p ~/.config/restic/password init`
 	- then run one backup by hand: `systemctl --user start restic-backup`

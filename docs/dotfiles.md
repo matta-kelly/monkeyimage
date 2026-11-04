@@ -5,7 +5,7 @@ status: active
 ---
 Dotfiles: the config files in `~` that set up your tools. Yours live in your own git repo, and chezmoi (a tool that copies the files of a repo into `~`) applies them. Nobody else's account sees them.
 - What they hold: what is yours, and where it lands
-- How you change them: the loop, and how a file is written
+- How you change them: the loop, getting them onto a machine, and how a file is written
 
 - [[you]]: everything else that is yours
 - [[how-it-works]]: where things live, and how config layers stack
@@ -47,6 +47,15 @@ chezmoi keeps your repo (the source) and `~` (the live files) in step.
 - undo: `git revert` the commit, then `chezmoi apply`
 - inspect: `chezmoi managed` lists the files it manages, and `chezmoi status` shows what has drifted
 - stop managing a file: `chezmoi forget <path>`
+
+### Getting them onto a machine
+- the first time: `chezmoi init --apply <repo>` clones the repo into `~/.local/share/chezmoi` and writes every file. That clone is the copy chezmoi works from
+- after that: `chezmoi update` pulls the repo and applies it in one step
+- a repo someone else helps manage: keep it private on GitHub, and give the machine a read-only deploy key
+	- the helper pushes from their own machine; the owner runs `chezmoi update`, with no GitHub account
+	- the deploy key's private half is a vault item. A template writes it to `~/.ssh/`, and an SSH host in `~/.ssh/config` uses it for `github.com`
+	- the clone's remote is that SSH host: `chezmoi git -- remote set-url origin git@<host>:<owner>/<repo>.git`
+	- the first clone runs before the key exists: clone over HTTPS while the repo is public, or with a token, then switch the remote to the SSH host
 
 ### How a file is written
 - drop-in: a small file next to the shared default. Use drop-ins first, and replace a whole file only for a named reason ([[how-it-works]], Config layering)
