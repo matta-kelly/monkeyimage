@@ -41,6 +41,7 @@ Monkeyworks: one Fedora Sway Atomic image, the same on every machine, with each 
 - [[setup]]: from nothing to a working machine
 	- Machine: install, rebase to the image, join the mesh
 	- Each person: vault, GitHub, dotfiles, backup
+- `AGENTS.md`: the rules every agent on this machine follows: how it works, and what to ask before doing
 - [[monke]]: the machine's CLI, and help, a chat about this machine
 	- Commands: status, update, rollback, help, init
 	- Help: local or main, and getting on wifi
