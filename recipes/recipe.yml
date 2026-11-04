@@ -111,6 +111,7 @@ modules:
       - scope: system # the "both" list: every user gets these
         install:
           - com.github.tchx84.Flatseal
+          - com.google.Chrome
 
   - type: systemd
     system:
