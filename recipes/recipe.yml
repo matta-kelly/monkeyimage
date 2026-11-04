@@ -68,6 +68,7 @@ modules:
         - gh # GitHub CLI: login, and git's credential helper
         - restic # each user's nightly backup
         - htop # rescue kit: slow, hot, full
+        - fastfetch # what this machine is, at a glance
         - lm_sensors
         - ncdu
         - tailscale

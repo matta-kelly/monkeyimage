@@ -117,6 +117,7 @@ Runs as root for every user, from `sysinit` to `multi-user` (systemd targets: bo
 		- htop: it's slow `added`
 		- lm_sensors: it's hot `added`
 		- ncdu: the disk is full `added`
+		- fastfetch: what this machine is at a glance: the OS, kernel, hardware, memory and disk `added`
 - security
 	- firewalld: enabled, zone `public`, which lets in only ssh, mdns and dhcpv6. Kept as shipped: nothing needs to reach in, the tailnet included `base`
 	- audit `base`
