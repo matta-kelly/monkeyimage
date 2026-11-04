@@ -112,6 +112,7 @@ modules:
         install:
           - com.github.tchx84.Flatseal
           - com.google.Chrome
+          - com.spotify.Client
 
   - type: systemd
     system:

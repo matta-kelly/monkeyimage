@@ -55,6 +55,7 @@ The GUI apps on the Arch machine. Flathub IDs checked against Flathub.
 - Both
 	- `com.github.tchx84.Flatseal`: see and change what each flatpak may reach
 	- `com.google.Chrome`: Chrome
+	- `com.spotify.Client`: Spotify
 - Just me
 	- `com.visualstudio.code`: VS Code
 	- `dev.zed.Zed`: Zed
@@ -65,7 +66,6 @@ The GUI apps on the Arch machine. Flathub IDs checked against Flathub.
 	- `io.gitlab.librewolf-community`: LibreWolf
 	- `md.obsidian.Obsidian`: Obsidian
 	- `org.onlyoffice.desktopeditors`: OnlyOffice
-	- `com.spotify.Client`: Spotify
 	- `org.darktable.Darktable`: darktable
 	- `com.protonvpn.www`: Proton VPN
 - Not on Flathub
