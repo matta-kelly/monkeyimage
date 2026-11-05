@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>LocalSend</short>
+  <description>LocalSend: send files between devices on the same network. Phones find the laptop and send to it on this port.</description>
+  <port protocol="tcp" port="53317"/>
+  <port protocol="udp" port="53317"/>
+</service>

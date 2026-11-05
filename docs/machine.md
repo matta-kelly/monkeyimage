@@ -100,7 +100,10 @@ Service: a program that runs in the background. System services run as root for 
 ## Networking
 
 - wifi and wired: NetworkManager, with its tray applet in the session
-- firewall: firewalld, zone `public`, as shipped. In only ssh, mdns, dhcpv6
+- firewall: firewalld. Every network starts in zone `public`, as shipped: in only ssh, mdns, dhcpv6
+	- a trusted network, such as the wifi at home, goes in zone `home`, which also lets in LocalSend, so a phone can send files to the laptop
+	- mark one, once per network: `nmcli connection modify "<wifi name>" connection.zone home`. `nmcli connection show` lists the names
+	- the image adds LocalSend's service (`/etc/firewalld/services/localsend.xml`) and the `home` zone with it (`/etc/firewalld/zones/home.xml`)
 - the mesh: tailscale, joined once per machine during [[setup]]. The vault is on the mesh
 - VPN: NetworkManager's OpenVPN and OpenConnect plugins. Proton VPN is an app, in one person's own list
 

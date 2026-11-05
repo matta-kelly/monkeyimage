@@ -121,6 +121,7 @@ Runs as root for every user, from `sysinit` to `multi-user` (systemd targets: bo
 		- fastfetch: what this machine is at a glance: the OS, kernel, hardware, memory and disk `added`
 - security
 	- firewalld: enabled, zone `public`, which lets in only ssh, mdns and dhcpv6. Kept as shipped: nothing needs to reach in, the tailnet included `base`
+		- the zone `home` adds LocalSend, for networks a person marks as trusted ([[machine]], Networking)
 	- audit `base`
 	- fprintd + fprintd-pam: fingerprint login `base`
 	- pam-u2f, pamu2fcfg: log in or sudo with a YubiKey, once set up in PAM `added`

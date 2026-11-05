@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<zone>
+  <short>Home</short>
+  <description>For trusted networks, such as the wifi at home. Fedora's home zone, plus LocalSend. A network uses it once it is marked: nmcli connection modify "NAME" connection.zone home</description>
+  <service name="ssh"/>
+  <service name="mdns"/>
+  <service name="samba-client"/>
+  <service name="dhcpv6-client"/>
+  <service name="localsend"/>
+  <forward/>
+</zone>
