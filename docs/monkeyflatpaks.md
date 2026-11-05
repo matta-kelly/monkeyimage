@@ -56,13 +56,13 @@ The GUI apps on the Arch machine. Flathub IDs checked against Flathub.
 	- `com.github.tchx84.Flatseal`: see and change what each flatpak may reach
 	- `com.google.Chrome`: Chrome
 	- `com.spotify.Client`: Spotify
+	- `com.brave.Browser`: Brave
 - Just me
 	- `com.visualstudio.code`: VS Code
 	- `dev.zed.Zed`: Zed
 - Just Jojo
 	- (none yet)
 - To sort
-	- `com.brave.Browser`: Brave
 	- `io.gitlab.librewolf-community`: LibreWolf
 	- `md.obsidian.Obsidian`: Obsidian
 	- `org.onlyoffice.desktopeditors`: OnlyOffice
