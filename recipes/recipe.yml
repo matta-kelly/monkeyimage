@@ -41,6 +41,17 @@ stages:
           - echo "600059b6d20ece89e19a20c4e9ab8d23c54cc33e9132a692dffbcc10ed226003  /tmp/llama.tar.gz" | sha256sum -c - # a mismatch fails the build
           - mkdir -p /out/usr/lib/llama.cpp /out/usr/bin && tar -xzf /tmp/llama.tar.gz -C /out/usr/lib/llama.cpp --strip-components=1 && ln -s ../lib/llama.cpp/llama-server /out/usr/bin/llama-server # the binaries find their libraries beside them
 
+  - name: sddm-theme # the login screen: sddm-astronaut-theme, pinned to a commit (it has no releases), Pixel Sakura (static). Bump: the commit and the sha256 together
+    from: fedora:44
+    modules:
+      - type: script
+        snippets:
+          - curl -fsSLo /tmp/theme.tar.gz https://github.com/Keyitdev/sddm-astronaut-theme/archive/abb3163c724935af888ba5ea9ac0c4f22afd8048.tar.gz
+          - echo "3e7ccde7158b336bb7ea6c69a18cefe27a9c82d6c04c4bef03b5b1519d6ae11c  /tmp/theme.tar.gz" | sha256sum -c - # a mismatch fails the build
+          - mkdir -p /out/usr/share/sddm/themes/sddm-astronaut-theme /out/usr/share/fonts/sddm-astronaut-theme && tar -xzf /tmp/theme.tar.gz -C /out/usr/share/sddm/themes/sddm-astronaut-theme --strip-components=1
+          - cd /out/usr/share/sddm/themes/sddm-astronaut-theme && mv Fonts/* /out/usr/share/fonts/sddm-astronaut-theme/ && rm -rf Fonts Previews .github Backgrounds/*.mp4 Backgrounds/*.gif # the fonts go where fontconfig finds them; the animated backgrounds need codecs Fedora does not ship
+          - sed -i 's|^ConfigFile=.*|ConfigFile=Themes/pixel_sakura_static.conf|' /out/usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop # the preset: any static one in Themes/
+
   - name: monke # the monke CLI: not pinned. Each build takes monke's latest release, checked against its SHA256SUMS
     from: fedora:44
     modules:
@@ -70,6 +81,9 @@ modules:
         - htop # rescue kit: slow, hot, full
         - fastfetch # what this machine is, at a glance
         - nodejs-npm # pi installs its extension packages with npm
+        # login screen: what the sddm-astronaut theme imports
+        - qt6-qtmultimedia
+        - qt6-qtvirtualkeyboard
         - lm_sensors
         - ncdu
         - tailscale
@@ -100,6 +114,11 @@ modules:
 
   - type: copy # llama-server from the llama-cpp stage: /usr/lib/llama.cpp, and /usr/bin/llama-server
     from: llama-cpp
+    src: /out/
+    dest: /
+
+  - type: copy # the login screen's theme and fonts from the sddm-theme stage
+    from: sddm-theme
     src: /out/
     dest: /
 

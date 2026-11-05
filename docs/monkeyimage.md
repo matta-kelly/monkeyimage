@@ -111,6 +111,9 @@ Runs as root for every user, from `sysinit` to `multi-user` (systemd targets: bo
 	- monke: the CLI of the machine (`status`, `update`, `rollback`, `help`, `init`), from its own repo `added`
 		- not pinned: the recipe's `monke` stage takes monke's latest release at each build, checked against its `SHA256SUMS`
 		- it brings `/etc/monke/config`, its prompts in `/usr/share/monke/`, and `monke-model.service`, which is enabled: on the first boot that is online it downloads `help`'s local model (2 GB) to `/var/lib/monke/models/`, then does nothing
+	- sddm-astronaut-theme: the login screen's look, in `/usr/share/sddm/themes/`, with its fonts in `/usr/share/fonts/sddm-astronaut-theme/` `added`
+		- not in Fedora: the recipe's `sddm-theme` stage takes it from GitHub, pinned to a commit and its sha256, since it has no releases. It sets the Pixel Sakura (static) preset
+		- `qt6-qtmultimedia` and `qt6-qtvirtualkeyboard`: what the theme loads `added`
 	- llama-server: runs `monke help`'s local model on the CPU, only while a local chat is open `added`
 		- not Fedora's `llama-cpp`: that package pulls the AMD GPU stack, 1.3 GB. llama.cpp's own CPU build is 23 MB, in `/usr/lib/llama.cpp` with `/usr/bin/llama-server` linked to it
 		- pinned in the recipe's `llama-cpp` stage to a build number and its sha256, since llama.cpp releases many times a day. To bump, change both together

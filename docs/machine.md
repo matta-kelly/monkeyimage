@@ -81,7 +81,9 @@ So a change to the recipe reaches every machine with no hands on it, on its next
 ---
 ## Users and login
 
-- login screen: SDDM, as Fedora ships it
+- login screen: SDDM, with the sddm-astronaut theme and its Pixel Sakura (static) background
+	- the theme is pinned to a commit in the recipe's `sddm-theme` stage, and chosen in `/etc/sddm.conf.d/50-theme.conf`
+	- another of its pictures: change `ConfigFile` in the stage to another file in the theme's `Themes/` folder. The moving ones are left out: they need video codecs Fedora does not ship
 - accounts: one per person. Each person's setup comes through [[setup]]
 - sudo and login with a YubiKey: `pam-u2f` and `pamu2fcfg` are in the image. Each key is set up in PAM per machine
 - fingerprint login: `fprintd`, from the base
