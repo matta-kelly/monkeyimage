@@ -116,6 +116,7 @@ modules:
           - com.google.Chrome
           - com.spotify.Client
           - com.brave.Browser
+          - org.localsend.localsend_app
 
   - type: systemd
     system:

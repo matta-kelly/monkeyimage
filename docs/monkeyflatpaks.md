@@ -57,6 +57,7 @@ The GUI apps on the Arch machine. Flathub IDs checked against Flathub.
 	- `com.google.Chrome`: Chrome
 	- `com.spotify.Client`: Spotify
 	- `com.brave.Browser`: Brave
+	- `org.localsend.localsend_app`: LocalSend, files between a phone and the laptop on the same wifi
 - Just me
 	- `com.visualstudio.code`: VS Code
 	- `dev.zed.Zed`: Zed
