@@ -36,6 +36,7 @@ Monkeyworks: one Fedora Sway Atomic image, the same on every machine, with each 
 	- Secrets: keys and passwords, from your vault
 	- Backup: your files, every night
 	- Shell and terminal: the prompt, aliases, the terminal
+	- Your agent: how `monke help` talks to you, and its key
 	- [[backup]]: how backup works, how to restore
 		- [[restic]]: the backup tool
 - [[setup]]: from nothing to a working machine
