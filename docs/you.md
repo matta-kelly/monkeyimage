@@ -1,6 +1,6 @@
 ---
 type: doc
-description: "The personal part of Monkeyworks: what belongs to one person and nobody else. Their account, dotfiles, secrets, backup, shell and terminal. Read when changing your own setup, or setting one up for someone."
+description: "The personal part of Monkeyworks: what belongs to one person and nobody else. Their account, dotfiles, secrets, backup, shell and terminal, and their agent. Read when changing your own setup, or setting one up for someone."
 status: active
 ---
 What is yours alone: your account and everything in `~` (your home directory). You can change any of it, and nothing here reaches anyone else.
@@ -9,6 +9,7 @@ What is yours alone: your account and everything in `~` (your home directory). Y
 - Secrets: keys and passwords, from your vault
 - Backup: your files, every night
 - Shell and terminal: the prompt, aliases, the terminal
+- Your agent: how `monke help` talks to you, and its key
 
 - [[setup]]: how a new person gets all of this
 - [[monkeyworks]]: the front page
@@ -55,3 +56,12 @@ Your files go to your own S3 bucket (cloud object storage) every night. Git prot
 - shell: bash. Fedora's `~/.bashrc` stays whole and loads every file in `~/.bashrc.d/`. Put your additions there, one file per reason
 - terminal: foot. Your config goes in `~/.config/foot/`
 - tools only you use go in your dotfiles or in a distrobox (a container for extra tools), not in the image
+
+---
+## Your agent
+
+`monke help` is an agent: pi, with the machine's rules and yours. Your part is in your dotfiles.
+- `~/.pi/agent/AGENTS.md`: how it treats you, in your words. It comes on top of the machine's rules (`/usr/share/doc/monkeyworks/AGENTS.md`)
+- `~/.pi/agent/settings.json`: your pi settings and extensions. pi writes to this file too, so your dotfiles merge into it and never replace it
+- `~/.config/monke/key`: the key for the main model, written from your vault
+- `~/.config/monke/config`: your own monke settings, such as the line `monke wtf` shows under its first line ([[monke]], Config)

@@ -245,6 +245,11 @@ Runs at `graphical`: SDDM login, then the user's own manager, inside Sway
 The config is in `/etc`. The image ships three things there: config files from `files/system/etc/` in the repo, the unit links the recipe's `systemd` module makes (a unit: a systemd service or timer), and what a build stage installs.
 - `rpm-ostreed.conf`: `AutomaticUpdatePolicy=stage`. An update downloads and stages the new image; it takes over at the next reboot ([[machine]], Updates and rollback)
 - `rpm-ostreed-automatic.timer`: a unit link, enabled by the `systemd` module. It runs the policy once a day
+- `flatpak-update.timer`: a system unit and a user unit of the same name, each enabled by the `systemd` module
+	- the system one updates the system flatpaks each day at 03:00, the user one each user's own flatpaks at 03:30
+	- a run missed while the machine was off or asleep happens when it is back, and a failed run tries again for about half an hour
+	- an app runs its new version from its next start
+	- a user changes the time with a drop-in in `~/.config/systemd/user/flatpak-update.timer.d/`, or turns theirs off with `systemctl --user mask flatpak-update.timer`
 - `keyd.service`: a unit link, enabled by the `systemd` module
 - `battery-warn.timer`: a user unit, enabled for every user by the `systemd` module
 	- in the graphical session, every minute, `/usr/bin/battery-warn` asks UPower and warns once at 20% and once at 10%, through dunst

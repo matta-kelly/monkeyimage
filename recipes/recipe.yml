@@ -141,6 +141,7 @@ modules:
     system:
       enabled:
         - rpm-ostreed-automatic.timer # daily download and stage, with the policy in /etc/rpm-ostreed.conf
+        - flatpak-update.timer # daily update of the system flatpaks, the apps every user shares
         - keyd.service # with no config, keyd matches no keyboard and does nothing
         - tailscaled.service # joins nothing until `tailscale up`
         - monke-model.service # downloads monke help's local model on the first boot that is online, then does nothing
@@ -151,5 +152,6 @@ modules:
         - kanshi.service # Fedora's unit; runs only for a user with ~/.config/kanshi/config
         - restic-backup.timer # runs only for a user with ~/.config/restic/env and a password file
         - restic-prune.timer # the same
+        - flatpak-update.timer # daily update of the user's own flatpaks
 
   - type: signing # policy and keys, so machines can check the image is signed

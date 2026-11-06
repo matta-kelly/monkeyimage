@@ -19,6 +19,7 @@ The image and the person stay apart.
 
 Do these steps in order.
 1. install generic Sway Atomic from USB ([Atomic Desktops docs](https://docs.fedoraproject.org/en-US/atomic-desktops/))
+	- turn on disk encryption (LUKS) at the installer's storage step. It is hard to add later: a reinstall, or a risky in-place re-encrypt
 2. rebase to the image (switch the system to it) in two hops, with a reboot after each ([rpm-ostree](https://coreos.github.io/rpm-ostree/))
 	- `rpm-ostree rebase ostree-unverified-registry:ghcr.io/matta-kelly/monkeyimage:latest`: the first image brings the signing key and policy
 	- `rpm-ostree rebase ostree-image-signed:docker://ghcr.io/matta-kelly/monkeyimage:latest`: from here every image is checked
