@@ -1,0 +1,13 @@
+[Unit]
+Description=Update the user's own flatpaks
+# Tries for about half an hour, so a laptop that just woke can reach wifi
+StartLimitIntervalSec=2h
+StartLimitBurst=6
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/flatpak update --user --noninteractive --assumeyes
+Restart=on-failure
+RestartSec=5min
+Nice=19
+IOSchedulingClass=idle

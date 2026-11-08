@@ -1,0 +1,15 @@
+[Unit]
+Description=Update the system flatpaks, the apps every user shares
+Wants=network-online.target
+After=network-online.target
+# Tries for about half an hour, so a laptop that just woke can reach wifi
+StartLimitIntervalSec=2h
+StartLimitBurst=6
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/flatpak update --system --noninteractive --assumeyes
+Restart=on-failure
+RestartSec=5min
+Nice=19
+IOSchedulingClass=idle

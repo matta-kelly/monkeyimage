@@ -1,0 +1,12 @@
+[Unit]
+Description=Update the user's own flatpaks every day
+
+[Timer]
+# Override in ~/.config/systemd/user/flatpak-update.timer.d/*.conf
+OnCalendar=*-*-* 03:30
+RandomizedDelaySec=30min
+# A run missed while the machine was off or asleep happens when it is back
+Persistent=true
+
+[Install]
+WantedBy=timers.target

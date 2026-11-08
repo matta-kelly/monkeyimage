@@ -1,0 +1,11 @@
+[Unit]
+Description=Update the system flatpaks every day
+
+[Timer]
+OnCalendar=*-*-* 03:00
+RandomizedDelaySec=30min
+# A run missed while the machine was off or asleep happens when it is back
+Persistent=true
+
+[Install]
+WantedBy=timers.target
