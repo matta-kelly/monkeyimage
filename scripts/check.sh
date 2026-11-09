@@ -6,7 +6,7 @@
 #   scripts/check.sh <set>    one set
 #   scripts/check.sh --plan   print the sets the change needs, and run none
 #
-# The three parts below are monkeyimage's. The rest is the template's (shit-sdlc, templates/repo).
+# The three parts below are monkeyimage's. The rest is the template's (kinetic, templates/repo).
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
