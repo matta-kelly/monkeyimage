@@ -58,12 +58,13 @@ The GUI apps on the Arch machine. Flathub IDs checked against Flathub.
 	- `com.spotify.Client`: Spotify
 	- `com.brave.Browser`: Brave
 	- `org.localsend.localsend_app`: LocalSend, files between a phone and the laptop on the same wifi
-- Just me
-	- `com.visualstudio.code`: VS Code
+- Just me: `run_onchange_install-flatpaks.sh` in my dotfiles installs them in my user scope, from Flathub as a user remote. An app taken off the list stays installed until `flatpak uninstall --user`
+	- `com.obsproject.Studio`: OBS Studio, record and stream. It captures the screen through the image's wlr portal
 	- `dev.zed.Zed`: Zed
 - Just Jojo
 	- (none yet)
 - To sort
+	- `com.visualstudio.code`: VS Code
 	- `io.gitlab.librewolf-community`: LibreWolf
 	- `md.obsidian.Obsidian`: Obsidian
 	- `org.onlyoffice.desktopeditors`: OnlyOffice
