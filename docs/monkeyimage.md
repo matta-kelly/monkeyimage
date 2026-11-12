@@ -24,6 +24,8 @@ The repo is `github.com/matta-kelly/monkeyimage`. It is public and made from [bl
 	- copied into the image at `/usr/share/doc/monkeyworks/`, so every machine carries the docs that match it
 	- public, so they name nothing on my network: a value like a server address is a placeholder
 - checks: every change to the image is checked before it is built, so a broken change never reaches a machine
+	- the check: `scripts/check.sh` (`just check`), the `checks` job in `.github/workflows/checks.yml`. Three sets: the note lint, units (each unit the recipe enables has a committed file in `files/system/`, or comes from the base, a package or a stage, named in the script), and generate (`bluebuild generate`: the recipe is valid)
+	- the gate: the ruleset on main requires `checks` on the exact commit, so `git land` waits for it, and main never takes a red change
 - signing: the image is signed, so a machine only takes images that came from this repo
 	- `cosign.pub` is in the repo
 	- the private key is the repo secret `SIGNING_SECRET`, with a copy in Vaultwarden (`monkeyimage-cosign-signing-key`)

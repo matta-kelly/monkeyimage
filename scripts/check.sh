@@ -11,17 +11,33 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 # 1. The sets, cheapest first. The first failure ends the run.
-sets="lint generate"
+sets="lint units generate"
 
 # 2. Each set's commands.
 # The lint where Node is: the pipeline's, or else the Node image (the justfile). generate: the recipe makes a Containerfile.
 set_lint() { if command -v npm >/dev/null; then npm run --silent lint; else just lint; fi; }
 set_generate() { just generate; }
 
+# units: each unit the recipe's systemd module enables has a file. Ours are the committed files in files/system, so a
+# unit left uncommitted fails here, as it does in the build. The rest come from the base image, a package or a stage,
+# and are named in from_elsewhere with their source. A new one of those is added there.
+from_elsewhere="rpm-ostreed-automatic.timer kanshi.service tailscaled.service keyd.service monke-model.service" # base, base, tailscale, keyd stage, monke stage
+set_units() {
+  local scope unit missing=0
+  while read -r scope unit; do
+    case " $from_elsewhere " in *" $unit "*) continue ;; esac
+    [ -n "$(git ls-files "files/system/usr/lib/systemd/$scope/$unit")" ] && continue
+    echo "units: the recipe enables the $scope unit $unit, but files/system/usr/lib/systemd/$scope/ has no committed file of it" >&2
+    missing=1
+  done < <(awk '/type: systemd/{on=1} /type: signing/{on=0} on && /^ +system:/{scope="system"} on && /^ +user:/{scope="user"} on && /^ *- [^ ]+\.(service|timer)/{print scope, $2}' recipes/recipe.yml)
+  return "$missing"
+}
+
 # 3. The sets a changed file needs. A file no rule names needs every set, so a missing rule runs more, never less.
 sets_for() {
   case "$1" in
     *.md) echo lint ;;
+    files/* | recipes/*) echo units generate ;;
     *) echo all ;;
   esac
 }
