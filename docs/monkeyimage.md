@@ -204,6 +204,11 @@ Runs at `graphical`: SDDM login, then the user's own manager, inside Sway
 		- grim `base`
 		- slurp `base`
 		- wf-recorder: screen recording `added`
+	- dictation
+		- Handy: speech to text on the laptop, offline. Each person sets their key, model and paste method in the app, and its autostart `added`
+			- not on Flathub and not in Fedora: its own rpm, installed by the recipe's Handy `script` module, pinned to a version and its sha256, since it publishes no checksums. To bump, change both together (`curl -fsSL <rpm URL> | sha256sum`)
+			- it cannot update itself: `/usr` is read-only, so its update check only says a new version exists
+		- wtype: types the transcript into the focused window, for Handy's direct typing `added`
 	- clipboard
 		- wl-clipboard `base`
 	- portals

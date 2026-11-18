@@ -97,6 +97,13 @@ modules:
         - wf-recorder
         - heif-pixbuf-loader
         - ffmpegthumbnailer
+        - wtype # types text into the focused window: Handy's direct typing
+
+  - type: script # Handy, dictation for every user: its own rpm, pinned (it has no checksum file and releases often). Bump: the version and the sha256 together
+    snippets:
+      - curl -fsSLo /tmp/handy.rpm https://github.com/cjpais/Handy/releases/download/v0.10.1/Handy-0.10.1-1.x86_64.rpm
+      - echo "71f2c75be660f56c612d4b94a4c02a95b8be09d8b8c2baf54376bfe3039b0aa5  /tmp/handy.rpm" | sha256sum -c - # a mismatch fails the build
+      - dnf install -y /tmp/handy.rpm && rm /tmp/handy.rpm
 
   - type: copy # the docs: how this machine works, readable on it
     src: docs/
