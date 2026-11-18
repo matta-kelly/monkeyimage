@@ -13,7 +13,7 @@ The model of the whole machine, which every part follows.
 ## Where things live
 
 Basis: the Filesystem Hierarchy Standard (FHS), plus the OSTree split, which is how Fedora documents Atomic. Each path has one owner and one way it changes.
-- sorting rule: the machine goes in the image, a person goes in their [[dotfiles]], a project goes in its container
+- sorting rule: the machine goes in the image, a person goes in their [[dotfiles]] (their tools in their daily box), a project goes in its container
 - the rule, by boot stage: [[monkeyimage]] (What gets baked)
 
 | Path                        | Holds                                              | Owner                                  | Changes by                                       |
@@ -22,6 +22,7 @@ Basis: the Filesystem Hierarchy Standard (FHS), plus the OSTree split, which is 
 | `/etc`                      | system config: image defaults + local changes      | the image (`files/system/etc`) + local | [[machine]] (Updates and rollback) (3-way merge) |
 | `/var/lib/flatpak`          | GUI apps, system scope                             | [[monkeyflatpaks]]                     | `default-flatpaks`, at boot                      |
 | `~/.local/share/containers` | dev environments (rootless Podman)                 | each project's container               | per project                                      |
+| `~/.local/share/containers`: a distrobox | a person's daily box: their CLI and dev tools, in a mutable container that shares their home | an ini in the person's dotfiles (`~/.config/distrobox/`) | [[dotfiles]]: their apply rebuilds it when the ini changes |
 | `~`: dotfiles               | config, user CLI tools                             | each person's repo                     | [[dotfiles]]                                     |
 | `~`: data                   | projects, documents, media, downloads              | each person, not in git                | [[you]] (Backup)                                 |
 | `~/.ssh`, `~/.aws`          | ssh keys, cloud creds                              | the vault, through rbw                 | [[you]] (Secrets)                                |
