@@ -143,6 +143,7 @@ modules:
           - com.spotify.Client
           - com.brave.Browser
           - org.localsend.localsend_app
+          - com.slack.Slack
 
   - type: systemd
     system:
